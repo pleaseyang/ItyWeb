@@ -20,7 +20,7 @@
 
       <div class="right-menu-item hover-effect">
         <router-link to="/notification">
-          <i class="el-icon-message-solid" content="message-icon">
+          <i class="el-icon-message-solid" content="message-icon" style="color: #5a5e66">
             <el-badge :hidden="unreadNotificationCount === 0" :value="unreadNotificationCount" :max="99" class="message-number" />
           </i>
         </router-link>
