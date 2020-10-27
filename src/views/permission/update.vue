@@ -1,0 +1,119 @@
+<template>
+  <div>
+    <el-form ref="form" :model="form" label-width="auto">
+      <el-form-item :label="$t('permission.name')" prop="name" :error="error.name ? error.name[0] : ''">
+        <el-input v-model="form.name" maxlength="60" show-word-limit />
+      </el-form-item>
+      <el-form-item :label="$t('permission.title')" prop="title" :error="error.title ? error.title[0] : ''">
+        <el-input v-model="form.title" maxlength="60" show-word-limit />
+      </el-form-item>
+      <el-form-item :label="$t('permission.icon')" prop="icon" :error="error.icon ? error.icon[0] : ''">
+        <e-icon-picker v-model="form.icon" :options="options" />
+      </el-form-item>
+      <el-form-item :label="$t('permission.path')" prop="path" :error="error.path ? error.path[0] : ''">
+        <el-input v-model="form.path" maxlength="60" show-word-limit />
+      </el-form-item>
+      <el-form-item :label="$t('permission.component')" prop="component" :error="error.component ? error.component[0] : ''">
+        <el-input v-model="form.component" maxlength="60" show-word-limit />
+      </el-form-item>
+      <el-form-item :label="$t('permission.sort')" prop="sort" :error="error.sort ? error.sort[0] : ''">
+        <el-input-number v-model="form.sort" />
+      </el-form-item>
+      <el-form-item :label="$t('permission.hidden')" prop="hidden" :error="error.hidden ? error.hidden[0] : ''">
+        <el-radio-group v-model="form.hidden">
+          <el-radio :label="0">{{ $t('permission.nav') }}</el-radio>
+          <el-radio :label="1">{{ $t('permission.btn') }}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit('form')">{{ $t('common.submit') }}</el-button>
+        <el-button @click="resetForm('form')">{{ $t('common.reset') }}</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+<script>
+import { update, permission } from '@/api/permission'
+import { EIconPicker } from 'e-icon-picker'
+import 'e-icon-picker/dist/index.css' // 基础样式
+import 'e-icon-picker/dist/index.css' // fontAwesome 图标库样式
+export default {
+  name: 'Update',
+  components: { EIconPicker },
+  props: {
+    success: {
+      type: Function,
+      default: null
+    },
+    id: {
+      type: Number,
+      default: 0,
+      required: true
+    }
+  },
+  data() {
+    return {
+      form: {
+        name: '',
+        title: '',
+        icon: 'el-icon-document',
+        path: '',
+        component: '',
+        sort: 1,
+        hidden: 1
+      },
+      options: { FontAwesome: false, ElementUI: true, addIconList: [], removeIconList: [] },
+      error: {},
+      pidData: []
+    }
+  },
+  watch: {
+    id() {
+      this.info()
+    }
+  },
+  created() {
+    this.info()
+  },
+  methods: {
+    info() {
+      if (this.id > 0) {
+        permission({
+          id: this.id
+        }).then(response => {
+          this.form = response.data
+        })
+      }
+    },
+    onSubmit(formName) {
+      this.error = {}
+      const form = this.form
+      form.guard_name = 'admin'
+      if (form.pid === 0) {
+        delete form.pid
+      }
+      update(form).then(response => {
+        this.$message({
+          message: response.message,
+          type: 'success'
+        })
+        this.resetForm(formName)
+        this.success()
+      }).catch(reason => {
+        const { data } = reason.response
+        if (data.code === 422) {
+          this.error = data.data
+        }
+      })
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields()
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
