@@ -125,7 +125,6 @@
       </el-form>
     </el-dialog>
     <el-dialog
-      v-el-drag-dialog
       :title="syncPermissionsTitle"
       :visible.sync="syncPermissionsVisible"
     >
