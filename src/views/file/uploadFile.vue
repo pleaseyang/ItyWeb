@@ -8,7 +8,7 @@
             <el-radio :label="2" border>{{ $t('file.uploadFileText.specifyDirectory') }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label-width="0">
+        <el-form-item label-width="0" :error="upload.radio1 === 2 && error.directory ? error.directory[0] : ''">
           <span v-if="upload.radio1 === 1">
             {{ directory }}
           </span>
@@ -37,6 +37,7 @@
             :before-upload="beforeUpload"
             :on-success="successUpload"
             :on-remove="removeUpload"
+            :on-error="errorUpload"
             multiple
           >
             <i class="el-icon-upload" />
@@ -100,7 +101,8 @@ export default {
       headers: {},
       action: '',
       uploadData: {},
-      fileList: []
+      fileList: [],
+      error: {}
     }
   },
   mounted() {
@@ -141,6 +143,11 @@ export default {
     },
     successUpload(response, file, fileList) {
       // 上传成功
+    },
+    errorUpload(err, file, fileList) {
+      const response = JSON.parse(err.message)
+      this.$message.error(response.message)
+      this.error = response.data
     },
     removeUpload(file, fileList) {
       const path = '/' + file.response.data.path

@@ -125,7 +125,7 @@
     >
       <el-row>
         <el-col :span="24" class="app-container">
-          <el-form label-position="left" label-width="80px" :model="makeDirectory">
+          <el-form label-position="left" label-width="80px" :model="makeDirectory" @submit.native.prevent>
             <el-form-item label-width="0">
               <help />
             </el-form-item>
@@ -379,6 +379,7 @@ export default {
           message: response.message
         })
         this.makeDirectoryDrawer = false
+        this.error = {}
         this.getList()
       }).catch(reason => {
         const { data } = reason.response
