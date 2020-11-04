@@ -268,9 +268,16 @@ export default {
       this.multipleSelection = row
     },
     download(row) {
+      const loading = this.$loading({
+        lock: true,
+        text: 'Downloading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       fileDownload({
         file: row.name
       }).then(response => {
+        loading.close()
         // 处理文档流
         const blob = new Blob([response])
         const eLink = document.createElement('a')

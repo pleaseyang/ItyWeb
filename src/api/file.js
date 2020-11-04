@@ -4,6 +4,7 @@ export function fileDownload(data) {
     url: '/file/download',
     method: 'post',
     responseType: 'blob',
+    timeout: 0,
     data
   })
 }

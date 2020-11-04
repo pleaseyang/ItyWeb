@@ -74,9 +74,16 @@ export default {
       })
     },
     getFile(fileName) {
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       file({
         file: fileName
       }).then(response => {
+        loading.close()
         const { file } = response.data
         this.title = fileName
         this.file = file
