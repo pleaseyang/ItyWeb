@@ -46,7 +46,7 @@
             <el-table-column prop="email" :label="$t('admin.email')" sortable />
             <el-table-column :label="$t('admin.roles')">
               <template slot-scope="scope">
-                <el-tag v-for="(item) in scope.row.roles" class="margin-l-5">{{ item.name }}</el-tag>
+                <el-tag v-for="(item, key) in scope.row.roles" :key="key" class="el-tags">{{ item.name }}</el-tag>
               </template>
             </el-table-column>
             <el-table-column prop="status" :label="$t('admin.status')" sortable>
@@ -403,4 +403,8 @@ export default {
 </script>
 
 <style scoped>
+  .el-tags {
+    margin-left: 5px;
+    margin-top: 5px;
+  }
 </style>
