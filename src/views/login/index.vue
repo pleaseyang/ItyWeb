@@ -125,11 +125,11 @@ export default {
           this.loading = false
         })
         .catch((reason) => {
+          this.loading = false
           const { data } = reason.response
           if (data.code === 422) {
             this.error = data.data
           }
-          this.loading = false
         })
     },
     getOtherQuery(query) {
