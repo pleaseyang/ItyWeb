@@ -224,7 +224,8 @@ export default {
       default: 'White',
       oneDark: 'Dark',
       vsCode: 'vs-code'
-    }
+    },
+    seeMore: 'See more'
   },
   permission: {
     keywords: 'Enter keywords to filter',

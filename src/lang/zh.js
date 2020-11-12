@@ -224,7 +224,8 @@ export default {
       default: '白色',
       oneDark: '黑色',
       vsCode: 'vs-code'
-    }
+    },
+    seeMore: '查看更多'
   },
   permission: {
     keywords: '输入关键字进行过滤',

@@ -56,9 +56,9 @@
                     <el-form-item>
                       <span>{{ props.row.file }}:{{ props.row.line }}</span>
                       <el-popconfirm
-                        class="margin-l-10"
                         v-if="props.row.is_solve === false"
                         v-permission="'exceptionError.amended'"
+                        class="margin-l-10"
                         :title="$t('exception.confirmSolveSuccessText')"
                         :confirm-button-text="$t('common.confirmButtonText')"
                         :cancel-button-text="$t('common.cancelButtonText')"
@@ -68,7 +68,7 @@
                           {{ $t('exception.solveSuccessText') }}
                         </el-button>
                       </el-popconfirm>
-                      <el-button v-else type="success" size="mini" icon="el-icon-check" plain disabled>
+                      <el-button v-else class="margin-l-10" type="success" size="mini" icon="el-icon-check" plain disabled>
                         {{ $t('exception.solveStatus.yes') }}
                       </el-button>
                     </el-form-item>

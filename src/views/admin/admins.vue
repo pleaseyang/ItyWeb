@@ -46,7 +46,13 @@
             <el-table-column prop="email" :label="$t('admin.email')" sortable />
             <el-table-column :label="$t('admin.roles')">
               <template slot-scope="scope">
-                <el-tag v-for="(item, key) in scope.row.roles" :key="key" class="el-tags">{{ item.name }}</el-tag>
+                <template v-if="scope.row.roles.length > 3">
+                  <el-tag v-for="(item, key) in scope.row.roles.slice(0, 2)" :key="key" class="el-tags">{{ item.name }}</el-tag>
+                  <el-link type="primary" :underline="false" class="margin-l-5 margin-t-5" @click="seeMoreRole(scope.row.roles)">{{ $t('common.seeMore') }}</el-link>
+                </template>
+                <template v-else>
+                  <el-tag v-for="(item, key) in scope.row.roles" :key="key" class="el-tags">{{ item.name }}</el-tag>
+                </template>
               </template>
             </el-table-column>
             <el-table-column prop="status" :label="$t('admin.status')" sortable>
@@ -181,6 +187,15 @@
     >
       <sync-permission :id="syncPermissionsId" :success="syncPermissionSuccess" />
     </el-dialog>
+    <el-dialog
+      v-el-drag-dialog
+      :title="$t('common.seeMore')"
+      :visible.sync="seeMoreRolesVisible"
+      :before-close="seeMoreRolesClose"
+      class="see-more-tag"
+    >
+      <el-tag v-for="(item, key) in seeMoreRoles" :key="key">{{ item.name }}</el-tag>
+    </el-dialog>
   </div>
 </template>
 
@@ -254,7 +269,9 @@ export default {
       syncRolesTitle: '',
       syncPermissionsId: 0,
       syncPermissionsVisible: false,
-      syncPermissionsTitle: ''
+      syncPermissionsTitle: '',
+      seeMoreRoles: [],
+      seeMoreRolesVisible: false
     }
   },
   mounted() {
@@ -396,6 +413,16 @@ export default {
       this.syncPermissionsId = 0
       this.syncPermissionsVisible = false
       this.getAdmins()
+    },
+
+    seeMoreRole(roles) {
+      this.seeMoreRoles = roles
+      this.seeMoreRolesVisible = true
+    },
+
+    seeMoreRolesClose() {
+      this.seeMoreRoles = []
+      this.seeMoreRolesVisible = false
     }
 
   }
@@ -406,5 +433,9 @@ export default {
   .el-tags {
     margin-left: 5px;
     margin-top: 5px;
+  }
+
+  .see-more-tag .el-tag+.el-tag {
+    margin-left: 10px;
   }
 </style>
