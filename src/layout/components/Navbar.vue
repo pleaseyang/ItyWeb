@@ -28,8 +28,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img v-if="avatar" :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <span v-else class="user-avatar">{{ name }}</span>
+          <img :src="'https://ui-avatars.com/api/?name=' + name + '&color=7F9CF5&background=EBF4FF'" class="user-avatar" :alt="name" :title="name">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
