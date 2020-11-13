@@ -16,7 +16,7 @@
             </template>
           </el-table-column>
           <el-table-column align="right">
-            <template slot="header" slot-scope="scope">
+            <template slot="header">
               <el-button type="primary" icon="el-icon-refresh" @click="getFiles" />
             </template>
           </el-table-column>

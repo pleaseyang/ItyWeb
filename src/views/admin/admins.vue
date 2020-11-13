@@ -48,7 +48,9 @@
               <template slot-scope="scope">
                 <template v-if="scope.row.roles.length > 3">
                   <el-tag v-for="(item, key) in scope.row.roles.slice(0, 2)" :key="key" class="el-tags">{{ item.name }}</el-tag>
-                  <el-link type="primary" :underline="false" class="margin-l-5 margin-t-5" @click="seeMoreRole(scope.row.roles)">{{ $t('common.seeMore') }}</el-link>
+                  <el-link type="primary" :underline="false" class="margin-l-5 margin-t-5 see-more-text" @click="seeMoreRole(scope.row.roles)">
+                    {{ $t('common.seeMore') }}
+                  </el-link>
                 </template>
                 <template v-else>
                   <el-tag v-for="(item, key) in scope.row.roles" :key="key" class="el-tags">{{ item.name }}</el-tag>
@@ -435,7 +437,12 @@ export default {
     margin-top: 5px;
   }
 
-  .see-more-tag .el-tag+.el-tag {
-    margin-left: 10px;
+  .see-more-text{
+    font-size: 12px;
+  }
+
+  .see-more-tag .el-tag {
+    margin-left: 5px;
+    margin-top: 5px;
   }
 </style>

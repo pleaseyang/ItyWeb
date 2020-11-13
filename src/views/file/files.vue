@@ -64,7 +64,7 @@
                 >{{ scope.row.name }}</span>
                 <span v-else-if="scope.row.type === 'path'">
                   <el-breadcrumb separator="/">
-                    <el-breadcrumb-item v-for="( item, i ) in scope.row.name">
+                    <el-breadcrumb-item v-for="( item, i ) in scope.row.name" :key="i">
                       <span @click="setPath(scope.row, i)">{{ item }}</span>
                     </el-breadcrumb-item>
                   </el-breadcrumb>
@@ -164,7 +164,6 @@
               <el-input
                 v-model="fileInfoDrawerData.url"
                 type="textarea"
-                autosize
                 readonly
                 resize="none"
                 :autosize="{ minRows: 2, maxRows: 4}"

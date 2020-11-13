@@ -102,7 +102,7 @@
                 <el-tooltip v-if="scope.row.causer_id" class="item" effect="dark" :content="scope.row.causer_id" placement="left">
                   <el-tag>{{ scope.row.causer_type }}</el-tag>
                 </el-tooltip>
-                <el-tag class="margin-l-5" v-if="scope.row.causer_id && scope.row.subject_id" type="info"><i class="el-icon-right" /></el-tag>
+                <el-tag v-if="scope.row.causer_id && scope.row.subject_id" class="margin-l-5" type="info"><i class="el-icon-right" /></el-tag>
                 <el-tooltip v-if="scope.row.subject_id" class="item margin-l-5" effect="dark" :content="scope.row.subject_id" placement="right">
                   <el-tag>{{ scope.row.subject_type }}</el-tag>
                 </el-tooltip>
@@ -270,20 +270,6 @@ export default {
       }
       this.offset = 0
       this.getLogs()
-    },
-    amended(id) {
-      amended({
-        id: id,
-        solve: 1
-      }).then(response => {
-        if (response.success === true) {
-          this.$notify({
-            message: response.message,
-            type: 'success'
-          })
-          this.getLogs()
-        }
-      })
     }
   }
 }
