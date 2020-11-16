@@ -385,6 +385,7 @@ export default {
           message: response.message
         })
         this.makeDirectoryDrawer = false
+        this.makeDirectory.name = ''
         this.error = {}
         this.getList()
       }).catch(reason => {

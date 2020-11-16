@@ -115,6 +115,10 @@ const actions = {
 
   notificationCount({ commit }, count) {
     commit('SET_UNREADNOTIFICATIONCOUNT', count)
+  },
+
+  name({ commit }, name) {
+    commit('SET_NAME', name)
   }
 }
 

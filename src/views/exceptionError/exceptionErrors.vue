@@ -83,7 +83,14 @@
               </template>
             </el-table-column>
             <el-table-column prop="id" :label="$t('exception.id')" sortable width="200" />
-            <el-table-column prop="message" :label="$t('exception.message')" sortable />
+            <el-table-column prop="message" :label="$t('exception.message')" sortable>
+              <template slot-scope="scope">
+                <template v-if="scope.row.message !== null && scope.row.message.length > 100">
+                  {{ scope.row.message.substr(0,97) }}...
+                </template>
+                <template v-else>{{ scope.row.message }}</template>
+              </template>
+            </el-table-column>
             <el-table-column prop="is_solve" :label="$t('exception.isSolve')" width="100" sortable>
               <template slot-scope="scope">
                 <el-tag :type="scope.row.is_solve ? 'success' : 'danger'">
@@ -105,6 +112,11 @@
               sortable
               width="180"
             />
+            <el-table-column :label="$t('exception.info')">
+              <template slot-scope="scope">
+                <el-link type="primary" :underline="false" @click="seeInfo(scope.row)">{{ $t('common.seeInfo') }}</el-link>
+              </template>
+            </el-table-column>
           </el-table>
         </el-col>
         <el-col :span="24" class="margin-t-10">
@@ -120,6 +132,16 @@
         </el-col>
       </el-col>
     </el-row>
+    <el-dialog
+      :title="seeInfoData.id"
+      :visible.sync="seeInfoVisible"
+      append-to-body
+      top="30px"
+      width="85%"
+      :before-close="seeInfoClose"
+    >
+      <pre v-highlightjs="seeInfoData.trace_as_string"><code class="php" /></pre>
+    </el-dialog>
     <back-to-top :visibility-height="300" :back-position="50" transition-name="fade" />
   </div>
 </template>
@@ -178,7 +200,9 @@ export default {
             picker.$emit('pick', [start, end])
           }
         }]
-      }
+      },
+      seeInfoVisible: false,
+      seeInfoData: {}
     }
   },
   mounted() {
@@ -253,11 +277,29 @@ export default {
           this.getLogs()
         }
       })
+    },
+    seeInfo(data) {
+      this.seeInfoVisible = true
+      this.seeInfoData = data
+    },
+    seeInfoClose() {
+      this.seeInfoVisible = false
+      this.seeInfoData = {}
     }
   }
 }
 </script>
 
 <style scoped>
-
+/deep/ .el-dialog__body {
+  padding: 0 20px 10px 20px !important;
+}
+.hljs{
+  display: block;
+  overflow-x: auto;
+  padding: .5em;
+}
+.php.hljs {
+  max-height: 630px !important;
+}
 </style>

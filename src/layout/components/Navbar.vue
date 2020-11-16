@@ -28,10 +28,15 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="'https://ui-avatars.com/api/?name=' + name + '&color=7F9CF5&background=EBF4FF'" class="user-avatar" :alt="name" :title="name">
+          <img :src="getAvatar('EBF4FF')" class="user-avatar" :alt="name" :title="name">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
+          <span style="display:block;" @click="show = true">
+            <el-dropdown-item>
+              {{ $t('navbar.setting') }}
+            </el-dropdown-item>
+          </span>
           <router-link to="/profile/index">
             <el-dropdown-item>
               {{ $t('navbar.profile') }}
@@ -66,12 +71,24 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'theme',
       'sidebar',
       'avatar',
       'device',
       'name',
       'unreadNotificationCount'
-    ])
+    ]),
+    show: {
+      get() {
+        return this.$store.state.settings.showSettings
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'showSettings',
+          value: val
+        })
+      }
+    }
   },
   methods: {
     toggleSideBar() {
@@ -80,6 +97,10 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    getAvatar(background) {
+      const color = this.theme.replace('#', '')
+      return 'https://ui-avatars.com/api/?name=' + this.name + '&color=' + color + '&background=' + background
     }
   }
 }

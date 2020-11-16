@@ -98,7 +98,8 @@ export default {
     logOut: 'Log Out',
     profile: 'Profile',
     theme: 'Theme',
-    size: 'Global Size'
+    size: 'Global Size',
+    setting: 'Layout Settings'
   },
   login: {
     title: 'Login Form',
@@ -225,7 +226,8 @@ export default {
       oneDark: 'Dark',
       vsCode: 'vs-code'
     },
-    seeMore: 'See more'
+    seeMore: 'See more',
+    seeInfo: 'View details'
   },
   permission: {
     keywords: 'Enter keywords to filter',
@@ -279,7 +281,8 @@ export default {
       all: 'All',
       no: 'Not fixed',
       yes: 'Fixed'
-    }
+    },
+    info: 'info'
   },
   admin: {
     id: 'User ID',

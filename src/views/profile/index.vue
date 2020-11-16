@@ -20,6 +20,7 @@
 <script>
 import { updateSelf } from '@/api/admin'
 import { getInfo } from '@/api/user'
+import store from '@/store'
 export default {
   name: 'Profile',
   data() {
@@ -53,6 +54,7 @@ export default {
         delete this.updateForm.password
       }
       updateSelf(this.updateForm).then(response => {
+        store.dispatch('user/name', this.updateForm.name)
         this.$message({
           message: response.message,
           type: 'success'

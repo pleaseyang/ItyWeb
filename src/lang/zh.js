@@ -98,7 +98,8 @@ export default {
     logOut: '退出登录',
     profile: '个人中心',
     theme: '换肤',
-    size: '布局大小'
+    size: '布局大小',
+    setting: '布局设置'
   },
   login: {
     title: '系统登录',
@@ -225,7 +226,8 @@ export default {
       oneDark: '黑色',
       vsCode: 'vs-code'
     },
-    seeMore: '查看更多'
+    seeMore: '查看更多',
+    seeInfo: '查看详情'
   },
   permission: {
     keywords: '输入关键字进行过滤',
@@ -279,7 +281,8 @@ export default {
       all: '所有',
       no: '未修复',
       yes: '已修复'
-    }
+    },
+    info: '错误详情'
   },
   admin: {
     id: '用户ID',

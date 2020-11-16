@@ -12,6 +12,8 @@
         <settings />
       </right-panel>
     </div>
+    <!--  防止刷新后主题丢失  -->
+    <Theme v-show="false" ref="theme" />
   </div>
 </template>
 
@@ -20,6 +22,8 @@ import RightPanel from '@/components/RightPanel'
 import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
+import Theme from '@/components/ThemePicker'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Layout',
@@ -29,7 +33,8 @@ export default {
     RightPanel,
     Settings,
     Sidebar,
-    TagsView
+    TagsView,
+    Theme
   },
   mixins: [ResizeMixin],
   data() {
@@ -56,6 +61,37 @@ export default {
   },
   mounted() {
     this.buttonTop = document.body.clientHeight / 2 - 24
+    if (Cookies.get('theme')) {
+      this.$refs.theme.theme = Cookies.get('theme')
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'theme',
+        value: Cookies.get('theme')
+      })
+    }
+    if (Cookies.get('tagsView')) {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'tagsView',
+        value: Cookies.get('tagsView') === 'true'
+      })
+    }
+    if (Cookies.get('sidebarLogo')) {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'sidebarLogo',
+        value: Cookies.get('sidebarLogo') === 'true'
+      })
+    }
+    if (Cookies.get('supportPinyinSearch')) {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'supportPinyinSearch',
+        value: Cookies.get('supportPinyinSearch') === 'true'
+      })
+    }
+    if (Cookies.get('fixedHeader')) {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'fixedHeader',
+        value: Cookies.get('fixedHeader') === 'true'
+      })
+    }
   },
   methods: {
     handleClickOutside() {
