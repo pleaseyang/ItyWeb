@@ -8,7 +8,7 @@
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
+        :active-text-color="theme"
         :collapse-transition="false"
         mode="vertical"
       >
@@ -29,7 +29,8 @@ export default {
   computed: {
     ...mapGetters([
       'permission_routes',
-      'sidebar'
+      'sidebar',
+      'theme'
     ]),
     activeMenu() {
       const route = this.$route
