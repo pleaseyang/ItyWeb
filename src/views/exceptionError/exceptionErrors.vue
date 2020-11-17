@@ -114,7 +114,7 @@
             />
             <el-table-column :label="$t('exception.info')">
               <template slot-scope="scope">
-                <el-link type="primary" :underline="false" @click="seeInfo(scope.row)">{{ $t('common.seeInfo') }}</el-link>
+                <el-button type="text" @click="seeInfo(scope.row)">{{ $t('common.seeInfo') }}</el-button>
               </template>
             </el-table-column>
           </el-table>

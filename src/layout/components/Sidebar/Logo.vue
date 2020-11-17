@@ -1,11 +1,13 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
+  <div class="sidebar-logo-container" :class="{'collapse':collapse}" :style="{'--theme': theme}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <h1 class="sidebar-title">{{ title }}</h1>
+        <img v-if="logo" src="@/assets/logo/logo.png" class="sidebar-logo">
+        <h1 v-else class="sidebar-title">{{ title }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <h1 class="sidebar-title">{{ title }} </h1>
+        <img v-if="logo" src="@/assets/logo/logo.png" class="sidebar-logo">
+        <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
   </div>
@@ -13,6 +15,7 @@
 
 <script>
 import defaultSettings from '@/settings'
+import { mapGetters } from 'vuex'
 export default {
   name: 'SidebarLogo',
   props: {
@@ -24,8 +27,13 @@ export default {
   data() {
     return {
       title: defaultSettings.title,
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo: false
     }
+  },
+  computed: {
+    ...mapGetters([
+      'theme'
+    ])
   }
 }
 </script>
@@ -63,7 +71,7 @@ export default {
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: #fff;
+      color: var(--theme);
       font-weight: 600;
       line-height: 50px;
       font-size: 14px;

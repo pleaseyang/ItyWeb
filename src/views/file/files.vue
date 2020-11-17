@@ -4,6 +4,7 @@
       <el-col :span="12">
         <el-button v-permission="'file.upload'" type="primary" @click="uploadDrawer = true">{{ $t('file.uploadFile') }}</el-button>
         <el-button v-permission="'file.makeDirectory'" @click="makeDirectoryDrawer = true">{{ $t('file.makeDirectory') }}</el-button>
+        <el-button @click="getList">{{ $t('common.refresh') }}</el-button>
         <el-dropdown class="margin-l-10">
           <el-button id="el-button-disable" disabled>
             {{ $t('common.batchHandle') }}<i class="el-icon-arrow-down el-icon--right" />
@@ -17,7 +18,6 @@
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <el-button @click="getList" class="margin-l-10">{{ $t('common.refresh') }}</el-button>
       </el-col>
       <el-col :span="6">
         <el-input

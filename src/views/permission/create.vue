@@ -17,7 +17,7 @@
         <el-input v-model="form.component" maxlength="60" show-word-limit />
       </el-form-item>
       <el-form-item :label="$t('permission.sort')" prop="sort" :error="error.sort ? error.sort[0] : ''">
-        <el-input-number v-model="form.sort" />
+        <el-input-number v-model="form.sort" :min="1" :max="999" />
       </el-form-item>
       <el-form-item :label="$t('permission.hidden')" prop="hidden" :error="error.hidden ? error.hidden[0] : ''">
         <el-radio-group v-model="form.hidden">
