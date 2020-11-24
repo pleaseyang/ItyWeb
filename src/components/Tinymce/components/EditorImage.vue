@@ -1,7 +1,7 @@
 <template>
   <div class="upload-container">
-    <el-button :style="{background:color,borderColor:color}" icon="el-icon-upload" size="mini" type="primary" @click=" dialogVisible=true">
-      upload
+    <el-button icon="el-icon-upload" size="mini" type="primary" @click=" dialogVisible=true">
+      {{ $t('file.uploadFile') }}
     </el-button>
     <el-dialog :visible.sync="dialogVisible">
       <el-upload
@@ -16,29 +16,24 @@
         list-type="picture-card"
       >
         <el-button size="small" type="primary">
-          Click upload
+          {{ $t('file.uploadFileText.uploadText2') }}
         </el-button>
       </el-upload>
       <el-button @click="dialogVisible = false">
-        Cancel
+        {{ $t('common.cancelButtonText') }}
       </el-button>
       <el-button type="primary" @click="handleSubmit">
-        Confirm
+        {{ $t('common.confirmButtonText') }}
       </el-button>
     </el-dialog>
   </div>
 </template>
 
 <script>
-// import { getToken } from 'api/qiniu'
 
 export default {
   name: 'EditorSlideUpload',
   props: {
-    color: {
-      type: String,
-      default: '#1890ff'
-    }
   },
   data() {
     return {

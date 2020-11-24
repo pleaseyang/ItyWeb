@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
           <el-form-item :label="$t('notification.message')" :error="error.message ? error.message[0] : ''">
-            <Tinymce ref="editor" v-model="form.message" :height="400" />
+            <Tinymce ref="editor" v-model="form.message" :height="400" :editorImage="false"/>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="send">{{ $t('notification.send') }}</el-button>

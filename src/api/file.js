@@ -40,3 +40,11 @@ export function makeDirectory(data) {
     data
   })
 }
+
+export function fileUpload(data) {
+  return request({
+    url: '/file/upload',
+    method: 'post',
+    data
+  })
+}
