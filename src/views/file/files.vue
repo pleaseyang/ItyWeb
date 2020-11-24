@@ -76,7 +76,7 @@
           <el-table-column prop="lastModified" :label="$t('file.lastModified')" width="200" />
           <el-table-column :label="$t('common.handle')" width="200">
             <template slot-scope="scope">
-              <template v-if="scope.row.type === 'directory'">
+              <template v-show="scope.row.type === 'directory'">
                 <el-button v-permission="'file.delete'" type="text" @click="directoryDelete(scope.row)">{{ $t('common.delete') }}</el-button>
               </template>
               <template v-if="scope.row.type === 'file'">
@@ -186,6 +186,7 @@
 import { files, fileDownload, fileDelete, directoryDelete, makeDirectory } from '@/api/file'
 import help from './help'
 import uploadFile from './uploadFile'
+import Cookies from 'js-cookie'
 
 export default {
   name: 'Files',
@@ -261,9 +262,10 @@ export default {
       }
     },
     handleSelectionChange(row) {
+      const size = Cookies.get('size') || 'medium'
       const className = row.length === 0 ? 'is-disabled' : ''
       document.getElementById('el-button-disable').disabled = row.length === 0
-      document.getElementById('el-button-disable').className = 'el-button el-button--default el-button--' + this.$store.getters.size + ' el-dropdown-selfdefine ' + className
+      document.getElementById('el-button-disable').className = 'el-button el-button--default el-button--' + size + ' el-dropdown-selfdefine ' + className
       this.multipleSelection = row
     },
     download(row) {

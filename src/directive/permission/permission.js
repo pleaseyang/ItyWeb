@@ -2,7 +2,6 @@ import store from '@/store'
 
 function checkPermission(el, binding) {
   const { value } = binding
-  const roles = store.getters && store.getters.roles
   const accessedRoutes = store.getters && store.getters.accessedRoutes
   if (value && typeof (value) === 'string') {
     if (value.length > 0) {
