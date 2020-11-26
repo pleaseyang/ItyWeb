@@ -96,6 +96,9 @@ export default {
     }
   },
   watch: {
+    id(val) {
+      this.hasChange = false
+    },
     value(val) {
       if (!this.hasChange && this.hasInit) {
         this.$nextTick(() =>
