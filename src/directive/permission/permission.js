@@ -11,7 +11,9 @@ function checkPermission(el, binding) {
           if (role.children && role.children.length > 0) {
             hasPermission(role.children)
           } else {
-            if (role.hasOwnProperty('name') && role.name === permissionRoles) throw new Error('hasPermission')
+            if (Object.prototype.hasOwnProperty.call(role, 'name') && role.name === permissionRoles) {
+              throw new Error('hasPermission')
+            }
           }
         })
       }

@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+// eslint-disable-next-line no-unused-vars
 import store from '../store'
 import Cookies from 'js-cookie'
 import elementEnLocale from 'element-ui/lib/locale/lang/en' // element-ui lang
 import elementZhLocale from 'element-ui/lib/locale/lang/zh-CN'// element-ui lang
+// eslint-disable-next-line no-unused-vars
 import elementEsLocale from 'element-ui/lib/locale/lang/es'// element-ui lang
+// eslint-disable-next-line no-unused-vars
 import elementJaLocale from 'element-ui/lib/locale/lang/ja'// element-ui lang
 import enLocale from './en'
 import zhLocale from './zh'
+// eslint-disable-next-line no-unused-vars
 import esLocale from './es'
+// eslint-disable-next-line no-unused-vars
 import jaLocale from './ja'
 
 Vue.use(VueI18n)

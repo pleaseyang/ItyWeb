@@ -45,7 +45,14 @@
             :draggable="sort"
             @node-drop="handleDrop"
           >
-            <span slot-scope="{ node, data }" class="custom-tree-node">
+            <span
+              slot-scope="{
+                node,
+                // eslint-disable-next-line vue/no-template-shadow
+                data
+              }"
+              class="custom-tree-node"
+            >
               <span><i :class="data.icon" /> {{ node.label }} <small class="color-909">{{ data.name }}</small></span>
               <span>
                 <el-button

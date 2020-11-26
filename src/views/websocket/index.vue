@@ -6,7 +6,7 @@
           <h2>在线人数: {{ count }}</h2>
         </el-col>
         <el-col id="chatRecord" :span="24" class="content padding-15">
-          <el-col v-for="(item, index) in groupChat" :span="24" :class="clientId === item.clientId ? 'text-right' : ''">
+          <el-col v-for="(item, index) in groupChat" :key="index" :span="24" :class="clientId === item.clientId ? 'text-right' : ''">
             <p>{{ item.name }} <small style="color: #909399">{{ rTime(item.created_at) }}</small></p>
             <p>{{ item.message }}</p>
           </el-col>

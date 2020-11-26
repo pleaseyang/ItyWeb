@@ -39,7 +39,7 @@
             highlight-current-row
             :data="tableData"
             style="width: 100%"
-            :default-sort="{prop: this.sort, order: this.order}"
+            :default-sort="{prop: sort, order: order}"
             @sort-change="tableSortChange"
           >
             <el-table-column prop="name" :label="$t('user.name')" sortable />
