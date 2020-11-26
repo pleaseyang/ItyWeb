@@ -14,7 +14,7 @@
           :value="notificationInfoData.data ? notificationInfoData.data.message : ''"
           :statusbar="false"
           :height="400"
-          :toolbar="[1]"
+          :toolbar="['']"
           :menubar="''"
           :readonly="true"
           :editor-image="false"
