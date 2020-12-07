@@ -8,9 +8,11 @@
 
 ## PHP
 [https://gitee.com/pleaseyang/Ity](https://gitee.com/pleaseyang/Ity)
+[https://github.com/pleaseyang/Ity](https://github.com/pleaseyang/Ity)
 
 ## VUE
 [https://gitee.com/pleaseyang/ItyWeb](https://gitee.com/pleaseyang/ItyWeb)
+[https://github.com/pleaseyang/ItyWeb](https://github.com/pleaseyang/ItyWeb)
 
 ## API文档
 API文档 [https://docs.apipost.cn/view/27e22c203e0d4854](https://docs.apipost.cn/view/27e22c203e0d4854)
