@@ -8,11 +8,14 @@
           stripe
           style="width: 100%"
         >
-          <el-table-column
-            prop="file"
-          >
+          <el-table-column prop="name" :label="$t('file.name')" />
+          <el-table-column prop="size" :label="$t('file.size')" />
+          <el-table-column prop="lastModified" :label="$t('file.lastModified')" />
+          <el-table-column>
             <template slot-scope="scope">
-              <el-button type="text" icon="el-icon-search" @click="getFile(scope.row.file)">{{ scope.row.file }}</el-button>
+              <el-button type="primary" icon="el-icon-search" @click="getFile(scope.row.name)">
+                {{ $t('common.details') }}
+              </el-button>
             </template>
           </el-table-column>
           <el-table-column align="right">
@@ -65,11 +68,7 @@ export default {
       this.loading = true
       files({}).then(response => {
         const { files } = response.data
-        const data = []
-        files.forEach(file => {
-          data.push({ 'file': file })
-        })
-        this.files = data
+        this.files = files
         this.loading = false
       })
     },
@@ -89,6 +88,8 @@ export default {
         this.file = file
         this.drawer = true
         this.offsetHeight = document.body.offsetHeight - 50
+      }).catch(reason => {
+        loading.close()
       })
     },
     handleClose(done) {
