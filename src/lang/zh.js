@@ -227,7 +227,9 @@ export default {
       vsCode: 'vs-code'
     },
     seeMore: '查看更多',
-    seeInfo: '查看详情'
+    seeInfo: '查看详情',
+    moreScreening: '更多筛选',
+    collapseScreening: '收起筛选'
   },
   permission: {
     keywords: '输入关键字进行过滤',

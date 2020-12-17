@@ -16,37 +16,6 @@
               <el-option label="POST" value="POST" />
             </el-select>
           </el-form-item>
-          <el-form-item :label="$t('nginx.uri')">
-            <el-input v-model="formInline.uri" :placeholder="$t('nginx.uri')" />
-          </el-form-item>
-          <el-form-item :label="$t('nginx.is_warning')">
-            <el-select v-model="formInline.is_warning" clearable :placeholder="$t('nginx.is_warning')">
-              <el-option :label="$t('nginx.all')" value="" />
-              <el-option :label="$t('nginx.yes')" :value="1" />
-              <el-option :label="$t('nginx.no')" :value="0" />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('nginx.is_error')">
-            <el-select v-model="formInline.is_error" clearable :placeholder="$t('nginx.is_error')">
-              <el-option :label="$t('nginx.all')" value="" />
-              <el-option :label="$t('nginx.yes')" :value="1" />
-              <el-option :label="$t('nginx.no')" :value="0" />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('nginx.is_robot')">
-            <el-select v-model="formInline.is_robot" clearable :placeholder="$t('nginx.is_robot')">
-              <el-option :label="$t('nginx.all')" value="" />
-              <el-option :label="$t('nginx.yes')" :value="1" />
-              <el-option :label="$t('nginx.no')" :value="0" />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('nginx.is_mobile')">
-            <el-select v-model="formInline.is_mobile" clearable :placeholder="$t('nginx.is_mobile')">
-              <el-option :label="$t('nginx.all')" value="" />
-              <el-option :label="$t('nginx.yes')" :value="1" />
-              <el-option :label="$t('nginx.no')" :value="0" />
-            </el-select>
-          </el-form-item>
           <el-form-item :label="$t('common.createTime')">
             <el-date-picker
               v-model="formInline.time"
@@ -58,10 +27,48 @@
               align="right"
             />
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
-            <el-button @click="resetForm">{{ $t('common.reset') }}</el-button>
-          </el-form-item>
+          <el-col v-show="searchMore">
+            <el-form-item :label="$t('nginx.uri')">
+              <el-input v-model="formInline.uri" :placeholder="$t('nginx.uri')" />
+            </el-form-item>
+            <el-form-item :label="$t('nginx.is_warning')">
+              <el-select v-model="formInline.is_warning" clearable :placeholder="$t('nginx.is_warning')">
+                <el-option :label="$t('nginx.all')" value="" />
+                <el-option :label="$t('nginx.yes')" :value="1" />
+                <el-option :label="$t('nginx.no')" :value="0" />
+              </el-select>
+            </el-form-item>
+            <el-form-item :label="$t('nginx.is_error')">
+              <el-select v-model="formInline.is_error" clearable :placeholder="$t('nginx.is_error')">
+                <el-option :label="$t('nginx.all')" value="" />
+                <el-option :label="$t('nginx.yes')" :value="1" />
+                <el-option :label="$t('nginx.no')" :value="0" />
+              </el-select>
+            </el-form-item>
+            <el-form-item :label="$t('nginx.is_robot')">
+              <el-select v-model="formInline.is_robot" clearable :placeholder="$t('nginx.is_robot')">
+                <el-option :label="$t('nginx.all')" value="" />
+                <el-option :label="$t('nginx.yes')" :value="1" />
+                <el-option :label="$t('nginx.no')" :value="0" />
+              </el-select>
+            </el-form-item>
+            <el-form-item :label="$t('nginx.is_mobile')">
+              <el-select v-model="formInline.is_mobile" clearable :placeholder="$t('nginx.is_mobile')">
+                <el-option :label="$t('nginx.all')" value="" />
+                <el-option :label="$t('nginx.yes')" :value="1" />
+                <el-option :label="$t('nginx.no')" :value="0" />
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
+              <el-button @click="resetForm">{{ $t('common.reset') }}</el-button>
+              <el-button @click="searchMore = !searchMore">
+                {{ searchMore ? $t('common.collapseScreening') : $t('common.moreScreening') }}
+              </el-button>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-col>
       <el-col v-loading="loading" :span="24">
@@ -133,6 +140,7 @@ export default {
   data() {
     return {
       total: 0,
+      searchMore: false,
       loading: true,
       offset: 0,
       limit: 10,

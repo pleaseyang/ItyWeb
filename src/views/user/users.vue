@@ -27,10 +27,12 @@
               align="right"
             />
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
-            <el-button @click="resetForm('formInline')">{{ $t('common.reset') }}</el-button>
-          </el-form-item>
+          <el-col>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
+              <el-button @click="resetForm('formInline')">{{ $t('common.reset') }}</el-button>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-col>
       <el-col v-loading="loading" :span="24">

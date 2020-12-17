@@ -3,63 +3,74 @@
     <el-row>
       <el-col :span="24">
         <el-form :inline="true" :model="formInline">
-          <el-form-item :label="$t('activity.log_name')">
-            <el-select v-model="formInline.log_name" clearable :placeholder="$t('activity.log_name')">
-              <el-option
-                v-for="item in log_name"
-                :key="item"
-                :label="item"
-                :value="item"
+          <el-col>
+            <el-form-item :label="$t('activity.log_name')">
+              <el-select v-model="formInline.log_name" clearable :placeholder="$t('activity.log_name')">
+                <el-option
+                  v-for="item in log_name"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item :label="$t('activity.description')">
+              <el-input v-model="formInline.description" :placeholder="$t('activity.description')" />
+            </el-form-item>
+            <el-form-item :label="$t('common.createTime')">
+              <el-date-picker
+                v-model="formInline.time"
+                type="datetimerange"
+                :picker-options="pickerOptions"
+                range-separator="~"
+                :start-placeholder="$t('common.startTime')"
+                :end-placeholder="$t('common.endTime')"
+                align="right"
               />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('activity.description')">
-            <el-input v-model="formInline.description" :placeholder="$t('activity.description')" />
-          </el-form-item>
-          <el-form-item :label="$t('activity.subject_id')">
-            <el-input v-model="formInline.subject_id" :placeholder="$t('activity.subject_id')" />
-          </el-form-item>
-          <el-form-item :label="$t('activity.subject_type')">
-            <el-select v-model="formInline.subject_type" clearable :placeholder="$t('activity.subject_type')">
-              <el-option
-                v-for="item in subject_type"
-                :key="item"
-                :label="item"
-                :value="item"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('activity.causer_id')">
-            <el-input v-model="formInline.causer_id" :placeholder="$t('activity.causer_id')" />
-          </el-form-item>
-          <el-form-item :label="$t('activity.causer_type')">
-            <el-select v-model="formInline.causer_type" clearable :placeholder="$t('activity.causer_type')">
-              <el-option
-                v-for="item in causer_type"
-                :key="item"
-                :label="item"
-                :value="item"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item :label="$t('activity.properties')">
-            <el-input v-model="formInline.properties" :placeholder="$t('activity.properties')" />
-          </el-form-item>
-          <el-form-item :label="$t('common.createTime')">
-            <el-date-picker
-              v-model="formInline.time"
-              type="datetimerange"
-              :picker-options="pickerOptions"
-              range-separator="~"
-              :start-placeholder="$t('common.startTime')"
-              :end-placeholder="$t('common.endTime')"
-              align="right"
-            />
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
-            <el-button @click="resetForm">{{ $t('common.reset') }}</el-button>
-          </el-form-item>
+            </el-form-item>
+          </el-col>
+          <transition name="el-zoom-in-top">
+            <el-col v-show="searchMore">
+              <el-form-item :label="$t('activity.subject_id')">
+                <el-input v-model="formInline.subject_id" :placeholder="$t('activity.subject_id')" />
+              </el-form-item>
+              <el-form-item :label="$t('activity.subject_type')">
+                <el-select v-model="formInline.subject_type" clearable :placeholder="$t('activity.subject_type')">
+                  <el-option
+                    v-for="item in subject_type"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item :label="$t('activity.causer_id')">
+                <el-input v-model="formInline.causer_id" :placeholder="$t('activity.causer_id')" />
+              </el-form-item>
+              <el-form-item :label="$t('activity.causer_type')">
+                <el-select v-model="formInline.causer_type" clearable :placeholder="$t('activity.causer_type')">
+                  <el-option
+                    v-for="item in causer_type"
+                    :key="item"
+                    :label="item"
+                    :value="item"
+                  />
+                </el-select>
+              </el-form-item>
+              <el-form-item :label="$t('activity.properties')">
+                <el-input v-model="formInline.properties" :placeholder="$t('activity.properties')" />
+              </el-form-item>
+            </el-col>
+          </transition>
+          <el-col>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
+              <el-button @click="resetForm">{{ $t('common.reset') }}</el-button>
+              <el-button @click="searchMore = !searchMore">
+                {{ searchMore ? $t('common.collapseScreening') : $t('common.moreScreening') }}
+              </el-button>
+            </el-form-item>
+          </el-col>
         </el-form>
       </el-col>
       <el-col v-loading="loading" :span="24">
@@ -195,7 +206,8 @@ export default {
             picker.$emit('pick', [start, end])
           }
         }]
-      }
+      },
+      searchMore: false
     }
   },
   mounted() {

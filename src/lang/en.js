@@ -227,7 +227,9 @@ export default {
       vsCode: 'vs-code'
     },
     seeMore: 'See more',
-    seeInfo: 'View details'
+    seeInfo: 'View details',
+    moreScreening: 'More screening',
+    collapseScreening: 'Collapse screening'
   },
   permission: {
     keywords: 'Enter keywords to filter',

@@ -1,25 +1,27 @@
 <template>
   <div class="app-container">
     <el-row>
-      <el-col :span="24">
+      <el-row :gutter="20">
+        <el-col :span="2">
+          <el-button
+            v-permission="'permission.create'"
+            type="primary"
+            icon="el-icon-circle-plus-outline"
+            @click="createVisible = true"
+          >{{ $t('common.create') }}
+          </el-button>
+        </el-col>
         <el-col :span="20">
           <el-input
             v-model="filterText"
             :placeholder="$t('permission.keywords')"
           />
         </el-col>
-        <el-col :span="3" :offset="1">
+        <el-col :span="2">
           <el-button type="primary" icon="el-icon-refresh" @click="getTree" />
         </el-col>
-      </el-col>
+      </el-row>
       <el-col :span="24" class="margin-t-5">
-        <el-button
-          v-permission="'permission.create'"
-          type="primary"
-          icon="el-icon-circle-plus-outline"
-          @click="createVisible = true"
-        >{{ $t('common.create') }}
-        </el-button>
         <el-tooltip :content="$t('permission.startSortText')" placement="left">
           <el-switch
             v-model="sort"
