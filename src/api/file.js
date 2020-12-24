@@ -48,3 +48,11 @@ export function fileUpload(data) {
     data
   })
 }
+
+export function fileUploadUnPermission(data) {
+  return request({
+    url: '/file/uploadUnPermission',
+    method: 'post',
+    data
+  })
+}

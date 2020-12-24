@@ -16,7 +16,7 @@ import editorImage from './components/EditorImage'
 import plugins from './plugins'
 import toolbar from './toolbar'
 import load from './dynamicLoadScript'
-import { fileUpload } from '@/api/file'
+import { fileUploadUnPermission } from '@/api/file'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
 const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce@5.6.1/tinymce.min.js'
@@ -186,7 +186,7 @@ export default {
           const formData = new FormData()
           formData.append('file', blobInfo.blob())
           formData.append('directory', 'notification')
-          fileUpload(formData).then(response => {
+          fileUploadUnPermission(formData).then(response => {
             success(response.data.realPath)
             progress(100)
           })
