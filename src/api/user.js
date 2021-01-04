@@ -23,6 +23,13 @@ export function logout() {
   })
 }
 
+export function refresh() {
+  return request({
+    url: '/refresh',
+    method: 'post'
+  })
+}
+
 export function users(data) {
   return request({
     url: '/users',

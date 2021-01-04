@@ -51,9 +51,15 @@ service.interceptors.response.use(
   error => {
     const { data } = error.response
     if (data.code === 401) {
-      MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-        confirmButtonText: 'Re-Login',
-        cancelButtonText: 'Cancel',
+      store.dispatch('user/refresh').then(res => {
+        MessageBox.confirm(res.message, '', {
+          type: 'warning'
+        }).then(() => {
+          location.reload()
+        })
+      })
+    } else if (data.code === 430) {
+      MessageBox.confirm(data.message, '', {
         type: 'warning'
       }).then(() => {
         store.dispatch('user/resetToken').then(() => {

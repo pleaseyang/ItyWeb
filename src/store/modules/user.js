@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, refresh } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -95,6 +95,19 @@ const actions = {
         dispatch('tagsView/delAllViews', null, { root: true })
 
         resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  refresh({ commit }) {
+    return new Promise((resolve, reject) => {
+      refresh().then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.access_token)
+        setToken(data.access_token)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
