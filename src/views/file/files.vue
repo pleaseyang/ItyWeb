@@ -76,7 +76,7 @@
           <el-table-column prop="lastModified" :label="$t('file.lastModified')" width="200" />
           <el-table-column :label="$t('common.handle')" width="200">
             <template slot-scope="scope">
-              <template v-show="scope.row.type === 'directory'">
+              <template v-if="scope.row.type === 'directory'">
                 <el-button v-permission="'file.delete'" type="text" @click="directoryDelete(scope.row)">{{ $t('common.delete') }}</el-button>
               </template>
               <template v-if="scope.row.type === 'file'">
