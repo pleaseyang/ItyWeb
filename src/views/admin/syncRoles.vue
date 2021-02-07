@@ -59,6 +59,7 @@ export default {
     admin() {
       if (this.id > 0) {
         this.loading = true
+        this.roles = []
         admin({
           id: this.id
         }).then(response => {
@@ -70,7 +71,11 @@ export default {
             const { roles } = response2.data
             this.roles = roles
             this.loading = false
+          }).catch(reason => {
+            this.loading = false
           })
+        }).catch(reason => {
+          this.loading = false
         })
       }
     },

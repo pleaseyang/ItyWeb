@@ -77,7 +77,9 @@
           <el-table-column :label="$t('common.handle')" width="200">
             <template slot-scope="scope">
               <template v-if="scope.row.type === 'directory'">
-                <el-button v-permission="'file.delete'" type="text" @click="directoryDelete(scope.row)">{{ $t('common.delete') }}</el-button>
+                <el-button v-permission="'file.deleteDirectory'" type="text" @click="directoryDelete(scope.row)">
+                  {{ $t('common.delete') }}
+                </el-button>
               </template>
               <template v-if="scope.row.type === 'file'">
                 <el-button type="text" @click="setPath(scope.row, 0)">{{ $t('common.details') }}</el-button>
@@ -187,6 +189,7 @@ import { files, fileDownload, fileDelete, directoryDelete, makeDirectory } from 
 import help from './help'
 import uploadFile from './uploadFile'
 import Cookies from 'js-cookie'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Files',
@@ -220,6 +223,8 @@ export default {
   methods: {
     getList() {
       this.loading = true
+      this.tableData = []
+      this.total = 0
       files({
         directory: this.directory,
         offset: this.offset,
@@ -229,6 +234,8 @@ export default {
         const { data, total } = response.data
         this.tableData = data
         this.total = total
+        this.loading = false
+      }).catch(reason => {
         this.loading = false
       })
     },
@@ -289,6 +296,14 @@ export default {
         eLink.click()
         URL.revokeObjectURL(eLink.href)
         document.body.removeChild(eLink)
+      }).catch(reason => {
+        loading.close()
+        const response = reason.response
+        Message({
+          message: response.statusText,
+          type: 'error',
+          duration: 5 * 1000
+        })
       })
     },
     fileDelete(row) {
@@ -327,6 +342,8 @@ export default {
             type: 'success',
             message: response.message
           })
+          this.getList()
+        }).catch(() => {
           this.getList()
         })
       }).catch(() => {

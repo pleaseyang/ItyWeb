@@ -197,6 +197,8 @@ export default {
       }).then(response => {
         this.loading = false
         this.data = response.data.tree
+      }).catch(reason => {
+        this.loading = false
       })
     },
     success() {

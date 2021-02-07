@@ -213,7 +213,8 @@ export default {
   methods: {
     getLogs() {
       this.loading = true
-      this.data = []
+      this.tableData = []
+      this.total = 0
       const requestData = {
         offset: this.offset,
         limit: this.limit,
@@ -233,6 +234,8 @@ export default {
         this.loading = false
         this.tableData = response.data.logs
         this.total = response.data.total
+      }).catch(reason => {
+        this.loading = false
       })
     },
     rTime(row, column) {

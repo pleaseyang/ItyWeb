@@ -60,13 +60,15 @@ export default {
       if (this.id > 0) {
         this.loading = true
         this.data = []
-
+        this.permissionIdList = []
         role({
           id: this.id
         }).then(response => {
           const { data } = response
           this.permissionIdList = data.permissionIdList
           this.getTree()
+        }).catch(reason => {
+          this.loading = false
         })
       }
     },
@@ -76,6 +78,8 @@ export default {
       }).then(response => {
         this.loading = false
         this.data = response.data.tree
+      }).catch(reason => {
+        this.loading = false
       })
     },
     onSubmit() {

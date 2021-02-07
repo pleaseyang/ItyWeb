@@ -191,6 +191,8 @@ export default {
   methods: {
     getLogs() {
       this.loading = true
+      this.tableData = []
+      this.total = 0
       const requestData = {
         http_code: this.formInline.http_code,
         ip: this.formInline.ip,
@@ -215,6 +217,8 @@ export default {
         this.loading = false
         this.tableData = data.logs
         this.total = data.total
+      }).catch(reason => {
+        this.loading = false
       })
     },
     handleSizeChange(val) {

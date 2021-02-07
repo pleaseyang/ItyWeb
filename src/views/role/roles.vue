@@ -257,6 +257,8 @@ export default {
     },
     getRoles() {
       this.loading = true
+      this.tableData = []
+      this.total = 0
       const requestData = {
         offset: this.offset,
         limit: this.limit,
@@ -276,6 +278,8 @@ export default {
         this.loading = false
         this.tableData = data.roles
         this.total = data.total
+      }).catch(reason => {
+        this.loading = false
       })
     },
     handleSizeChange(val) {

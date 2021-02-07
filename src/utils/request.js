@@ -50,15 +50,7 @@ service.interceptors.response.use(
   },
   error => {
     const { data } = error.response
-    if (data.code === 401) {
-      store.dispatch('user/refresh').then(res => {
-        MessageBox.confirm(res.message, '', {
-          type: 'warning'
-        }).then(() => {
-          location.reload()
-        })
-      })
-    } else if (data.code === 430) {
+    if (data.code === 430) {
       MessageBox.confirm(data.message, '', {
         type: 'warning'
       }).then(() => {

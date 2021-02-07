@@ -66,9 +66,12 @@ export default {
   methods: {
     getFiles() {
       this.loading = true
+      this.files = []
       files({}).then(response => {
         const { files } = response.data
         this.files = files
+        this.loading = false
+      }).catch(reason => {
         this.loading = false
       })
     },

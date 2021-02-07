@@ -216,7 +216,8 @@ export default {
   methods: {
     getLogs() {
       this.loading = true
-      this.data = []
+      this.tableData = []
+      this.total = 0
       this.subject_type = []
       this.causer_type = []
       this.log_name = []
@@ -246,6 +247,8 @@ export default {
         this.subject_type = response.data.subject_type
         this.causer_type = response.data.causer_type
         this.log_name = response.data.log_name
+      }).catch(reason => {
+        this.loading = false
       })
     },
     rTime(row, column) {
