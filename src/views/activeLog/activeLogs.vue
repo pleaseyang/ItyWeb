@@ -130,6 +130,7 @@
         </el-col>
         <el-col :span="24" class="margin-t-10">
           <el-pagination
+            v-if="total"
             :page-sizes="[5, 20, 35, 50]"
             :page-size="5"
             :current-page="offset"

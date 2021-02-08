@@ -86,6 +86,7 @@
         </el-col>
         <el-col :span="24" class="margin-t-10">
           <el-pagination
+            v-if="total"
             :page-sizes="[10, 25, 50]"
             :page-size="10"
             :current-page="offset"
