@@ -86,7 +86,6 @@
         </el-col>
         <el-col :span="24" class="margin-t-10">
           <el-pagination
-            v-if="total"
             :page-sizes="[10, 25, 50]"
             :page-size="10"
             :current-page="offset"
@@ -258,8 +257,6 @@ export default {
     },
     getRoles() {
       this.loading = true
-      this.tableData = []
-      this.total = 0
       const requestData = {
         offset: this.offset,
         limit: this.limit,
@@ -281,6 +278,8 @@ export default {
         this.total = data.total
       }).catch(reason => {
         this.loading = false
+        this.tableData = []
+        this.total = 0
       })
     },
     handleSizeChange(val) {

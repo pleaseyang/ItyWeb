@@ -123,7 +123,6 @@
         </el-col>
         <el-col :span="24" class="margin-t-10">
           <el-pagination
-            v-if="total"
             :page-sizes="[5, 20, 35, 50]"
             :page-size="5"
             :current-page="offset"
@@ -214,8 +213,6 @@ export default {
   methods: {
     getLogs() {
       this.loading = true
-      this.tableData = []
-      this.total = 0
       const requestData = {
         offset: this.offset,
         limit: this.limit,
@@ -237,6 +234,8 @@ export default {
         this.total = response.data.total
       }).catch(reason => {
         this.loading = false
+        this.tableData = []
+        this.total = 0
       })
     },
     rTime(row, column) {

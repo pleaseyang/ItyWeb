@@ -118,7 +118,6 @@
         </el-col>
         <el-col :span="24" class="margin-t-10">
           <el-pagination
-            v-if="total"
             :page-sizes="[10, 25, 50]"
             :page-size="10"
             :current-page="offset"
@@ -192,8 +191,6 @@ export default {
   methods: {
     getLogs() {
       this.loading = true
-      this.tableData = []
-      this.total = 0
       const requestData = {
         http_code: this.formInline.http_code,
         ip: this.formInline.ip,
@@ -220,6 +217,8 @@ export default {
         this.total = data.total
       }).catch(reason => {
         this.loading = false
+        this.tableData = []
+        this.total = 0
       })
     },
     handleSizeChange(val) {

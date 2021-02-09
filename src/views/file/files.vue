@@ -101,7 +101,6 @@
       </el-col>
       <el-col :span="24" class="margin-t-10">
         <el-pagination
-          v-if="total"
           :page-sizes="[25, 50, 75, 100]"
           :page-size="25"
           :current-page="offset"
@@ -224,8 +223,6 @@ export default {
   methods: {
     getList() {
       this.loading = true
-      this.tableData = []
-      this.total = 0
       files({
         directory: this.directory,
         offset: this.offset,
@@ -238,6 +235,8 @@ export default {
         this.loading = false
       }).catch(reason => {
         this.loading = false
+        this.tableData = []
+        this.total = 0
       })
     },
     handleSizeChange(val) {
