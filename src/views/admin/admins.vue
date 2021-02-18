@@ -16,6 +16,26 @@
           <el-form-item :label="$t('admin.name')" prop="name">
             <el-input v-model="formInline.name" :placeholder="$t('admin.name')" />
           </el-form-item>
+          <el-form-item :label="$t('admin.email')" prop="email">
+            <el-input v-model="formInline.email" :placeholder="$t('admin.email')" />
+          </el-form-item>
+          <el-form-item :label="$t('admin.status')" prop="status">
+            <el-select v-model="formInline.status" :placeholder="$t('admin.status')">
+              <el-option :label="$t('notification.all')" value="" />
+              <el-option :label="$t('admin.status1Text')" :value="1" />
+              <el-option :label="$t('admin.status0Text')" :value="0" />
+            </el-select>
+          </el-form-item>
+          <el-form-item :label="$t('admin.roles')" prop="role_ids">
+            <el-select v-model="formInline.role_ids" multiple :placeholder="$t('admin.roles')">
+              <el-option
+                v-for="(role, roleKey) in roles"
+                :key="roleKey"
+                :label="role.name"
+                :value="role.id"
+              />
+            </el-select>
+          </el-form-item>
           <el-form-item :label="$t('common.createTime')" prop="time">
             <el-date-picker
               v-model="formInline.time"
@@ -48,14 +68,14 @@
             <el-table-column prop="email" :label="$t('admin.email')" sortable />
             <el-table-column :label="$t('admin.roles')">
               <template slot-scope="scope">
-                <template v-if="scope.row.roles.length > 3">
-                  <el-tag v-for="(item, key) in scope.row.roles.slice(0, 2)" :key="key" class="el-tags">{{ item.name }}</el-tag>
-                  <el-link type="primary" :underline="false" class="margin-l-5 margin-t-5 see-more-text" @click="seeMoreRole(scope.row.roles)">
+                <template v-if="scope.row.role_names.length > 3">
+                  <el-tag v-for="(item, key) in scope.row.role_names.slice(0, 2)" :key="key" class="el-tags">{{ item }}</el-tag>
+                  <el-link type="primary" :underline="false" class="margin-l-5 margin-t-5 see-more-text" @click="seeMoreRole(scope.row.role_names)">
                     {{ $t('common.seeMore') }}
                   </el-link>
                 </template>
                 <template v-else>
-                  <el-tag v-for="(item, key) in scope.row.roles" :key="key" class="el-tags">{{ item.name }}</el-tag>
+                  <el-tag v-for="(item, key) in scope.row.role_names" :key="key" class="el-tags">{{ item }}</el-tag>
                 </template>
               </template>
             </el-table-column>
@@ -198,7 +218,7 @@
       :before-close="seeMoreRolesClose"
       class="see-more-tag"
     >
-      <el-tag v-for="(item, key) in seeMoreRoles" :key="key">{{ item.name }}</el-tag>
+      <el-tag v-for="(item, key) in seeMoreRoles" :key="key">{{ item }}</el-tag>
     </el-dialog>
   </div>
 </template>
@@ -206,6 +226,7 @@
 <script>
 import { rTime } from '@/utils'
 import { admins, admin, deleted, create as createAdmin, update } from '@/api/admin'
+import { all } from '@/api/role'
 import SyncRole from './syncRoles'
 import SyncPermission from './syncPermissions'
 
@@ -228,6 +249,9 @@ export default {
       },
       formInline: {
         name: '',
+        email: '',
+        status: '',
+        role_ids: '',
         time: ''
       },
       total: 0,
@@ -237,6 +261,7 @@ export default {
       offset: 0,
       limit: 10,
       tableData: [],
+      roles: [],
       pickerOptions: {
         shortcuts: [{
           text: this.$t('common.week'),
@@ -279,6 +304,7 @@ export default {
     }
   },
   mounted() {
+    this.getRoles()
     this.getAdmins()
   },
   methods: {
@@ -337,6 +363,15 @@ export default {
       this.offset = 0
       this.getAdmins()
     },
+    getRoles() {
+      all({
+        'guard_name': 'admin'
+      }).then(response => {
+        this.roles = response.data.roles
+      }).catch(reason => {
+        this.roles = []
+      })
+    },
     getAdmins() {
       this.loading = true
       const requestData = {
@@ -345,7 +380,12 @@ export default {
         order: this.order,
         sort: this.sort,
         name: this.formInline.name,
+        email: this.formInline.email,
+        status: this.formInline.status,
         guard_name: 'admin'
+      }
+      if (this.formInline.role_ids.length > 0) {
+        requestData['role_ids'] = this.formInline.role_ids
       }
       if (rTime(this.formInline.time[0]) !== '') {
         requestData['start_at'] = rTime(this.formInline.time[0])
