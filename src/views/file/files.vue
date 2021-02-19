@@ -76,12 +76,12 @@
           <el-table-column prop="lastModified" :label="$t('file.lastModified')" width="200" />
           <el-table-column :label="$t('common.handle')" width="200">
             <template slot-scope="scope">
-              <template v-if="scope.row.type === 'directory'">
+              <div v-show="scope.row.type === 'directory'">
                 <el-button v-permission="'file.deleteDirectory'" type="text" @click="directoryDelete(scope.row)">
                   {{ $t('common.delete') }}
                 </el-button>
-              </template>
-              <template v-if="scope.row.type === 'file'">
+              </div>
+              <div v-show="scope.row.type === 'file'">
                 <el-button type="text" @click="setPath(scope.row, 0)">{{ $t('common.details') }}</el-button>
                 <el-dropdown style="margin-left: 15px">
                   <el-button type="text">{{ $t('common.more') }}<i class="el-icon-arrow-down el-icon--right" /></el-button>
@@ -94,7 +94,7 @@
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-              </template>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -152,6 +152,11 @@
             <div slot="error" style="height: 100%">
               <div class="image-slot">
                 {{ $t('file.NSCTP') }}
+              </div>
+            </div>
+            <div slot="placeholder" style="height: 100%">
+              <div class="image-slot">
+                {{ $t('common.loading') }}
               </div>
             </div>
           </el-image>

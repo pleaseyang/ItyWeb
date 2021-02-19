@@ -229,7 +229,8 @@ export default {
     seeMore: '查看更多',
     seeInfo: '查看详情',
     moreScreening: '更多筛选',
-    collapseScreening: '收起筛选'
+    collapseScreening: '收起筛选',
+    loading: '加载中'
   },
   permission: {
     keywords: '输入关键字进行过滤',
