@@ -73,7 +73,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="size" :label="$t('file.size')" width="100" />
-          <el-table-column prop="lastModified" :label="$t('file.lastModified')" width="200" />
+          <el-table-column prop="lastModified" :label="$t('file.lastModified')" :formatter="rTime" width="200" />
           <el-table-column :label="$t('common.handle')" width="200">
             <template slot-scope="scope">
               <div v-show="scope.row.type === 'directory'">
@@ -195,6 +195,7 @@ import help from './help'
 import uploadFile from './uploadFile'
 import Cookies from 'js-cookie'
 import { Message } from 'element-ui'
+import { rTime } from '@/utils'
 
 export default {
   name: 'Files',
@@ -427,6 +428,9 @@ export default {
       this.getList()
       this.$refs.uploadFileRef.clearFiles()
       done()
+    },
+    rTime(row, column) {
+      return rTime(row[column.property])
     }
   }
 }

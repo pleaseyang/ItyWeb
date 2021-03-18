@@ -10,7 +10,7 @@
         >
           <el-table-column prop="name" :label="$t('file.name')" />
           <el-table-column prop="size" :label="$t('file.size')" />
-          <el-table-column prop="lastModified" :label="$t('file.lastModified')" />
+          <el-table-column prop="lastModified" :label="$t('file.lastModified')" :formatter="rTime" />
           <el-table-column>
             <template slot-scope="scope">
               <el-button type="primary" icon="el-icon-search" @click="getFile(scope.row.name)">
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { rTime } from '@/utils'
 import { files, file } from '@/api/exception'
 
 export default {
@@ -99,6 +100,9 @@ export default {
       this.title = ''
       this.file = ''
       done()
+    },
+    rTime(row, column) {
+      return rTime(row[column.property])
     }
   }
 }
