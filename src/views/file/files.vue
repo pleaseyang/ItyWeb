@@ -135,7 +135,7 @@
               <el-input v-model="makeDirectory.name" type="text" minlength="1" maxlength="60" show-word-limit />
             </el-form-item>
             <el-form-item>
-              <el-button class="margin-t-10" type="primary" @click="makeDirectoryHandle">{{ $t('common.submit') }}</el-button>
+              <el-button class="margin-t-10" type="primary" :loading="makeDirectoryDrawerLoading" @click="makeDirectoryHandle">{{ $t('common.submit') }}</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -215,6 +215,7 @@ export default {
       offset: 0,
       length: 25,
       makeDirectoryDrawer: false,
+      makeDirectoryDrawerLoading: false,
       makeDirectory: {
         name: ''
       },
@@ -401,6 +402,7 @@ export default {
       oInput.remove()
     },
     makeDirectoryHandle() {
+      this.makeDirectoryDrawerLoading = true
       makeDirectory({
         directory: this.directory + this.makeDirectory.name
       }).then(response => {
@@ -417,6 +419,8 @@ export default {
         if (data.code === 422) {
           this.error = data.data
         }
+      }).finally(() => {
+        this.makeDirectoryDrawerLoading = false
       })
     },
     handleClose(done) {

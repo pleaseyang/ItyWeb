@@ -1,9 +1,8 @@
 <template>
-  <el-form>
+  <el-form v-loading="loading">
     <el-form-item>
       <el-tree
         ref="tree"
-        v-loading="loading"
         :data="data"
         :props="defaultProps"
         node-key="id"
@@ -15,7 +14,7 @@
       />
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">{{ $t('common.submit') }}</el-button>
+      <el-button type="primary" :loading="submitLoading" @click="onSubmit">{{ $t('common.submit') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -44,7 +43,8 @@ export default {
         children: 'children',
         label: 'title'
       },
-      permissionIds: []
+      permissionIds: [],
+      submitLoading: false
     }
   },
   watch: {
@@ -82,6 +82,7 @@ export default {
       })
     },
     onSubmit() {
+      this.submitLoading = true
       const data = this.$refs.tree.getCheckedKeys()
       syncPermissions({
         id: this.id,
@@ -92,6 +93,8 @@ export default {
           type: 'success'
         })
         this.success()
+      }).finally(() => {
+        this.submitLoading = false
       })
     }
   }

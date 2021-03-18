@@ -14,6 +14,7 @@
         <el-col :span="24" class="padding-15">
           <el-col :span="18">
             <el-input
+              ref="input"
               v-model="textarea"
               type="text"
               placeholder="请输入内容"
@@ -158,7 +159,7 @@ export default {
         this.websocket.send(JSON.stringify(sendMessage2))
         this.textarea = ''
       } else {
-        this.$message.error('????????????????????????')
+        this.$refs.input.focus()
       }
     },
     rTime(column) {

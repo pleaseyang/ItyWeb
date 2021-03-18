@@ -1,9 +1,8 @@
 <template>
-  <el-form>
+  <el-form v-loading="loading">
     <el-form-item>
       <el-select
         v-model="roleIds"
-        v-loading="loading"
         class="width-100"
         multiple
         filterable
@@ -19,7 +18,7 @@
       </el-select>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">{{ $t('common.submit') }}</el-button>
+      <el-button type="primary" :loading="submitLoading" @click="onSubmit">{{ $t('common.submit') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -44,7 +43,8 @@ export default {
     return {
       roles: [],
       roleIds: [],
-      loading: false
+      loading: false,
+      submitLoading: false
     }
   },
   watch: {
@@ -80,6 +80,7 @@ export default {
       }
     },
     onSubmit() {
+      this.submitLoading = true
       syncRoles({
         'guard_name': 'admin',
         'guard_id': this.id,
@@ -90,6 +91,8 @@ export default {
           type: 'success'
         })
         this.success()
+      }).finally(() => {
+        this.submitLoading = false
       })
     }
   }

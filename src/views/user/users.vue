@@ -96,17 +96,17 @@
       :visible.sync="createVisible"
     >
       <el-form ref="createForm" :model="createForm" label-width="auto" @submit.native.prevent>
-        <el-form-item :label="$t('user.name')" prop="name" :error="error.name ? error.name[0] : ''">
+        <el-form-item :label="$t('user.name')" prop="name" :error="createError.name ? createError.name[0] : ''">
           <el-input v-model="createForm.name" />
         </el-form-item>
-        <el-form-item :label="$t('user.email')" prop="email" :error="error.email ? error.email[0] : ''">
+        <el-form-item :label="$t('user.email')" prop="email" :error="createError.email ? createError.email[0] : ''">
           <el-input v-model="createForm.email" />
         </el-form-item>
-        <el-form-item :label="$t('user.password')" prop="password" :error="error.password ? error.password[0] : ''">
+        <el-form-item :label="$t('user.password')" prop="password" :error="createError.password ? createError.password[0] : ''">
           <el-input v-model="createForm.password" show-password />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onCreate('createForm')">{{ $t('common.submit') }}</el-button>
+          <el-button type="primary" :loading="createLoading" @click="onCreate('createForm')">{{ $t('common.submit') }}</el-button>
           <el-button @click="resetCreateForm('createForm')">{{ $t('common.reset') }}</el-button>
         </el-form-item>
       </el-form>
@@ -117,17 +117,17 @@
       :visible.sync="updateVisible"
     >
       <el-form ref="updateForm" :model="updateForm" label-width="auto" @submit.native.prevent>
-        <el-form-item :label="$t('user.name')" prop="name" :error="error.name ? error.name[0] : ''">
+        <el-form-item :label="$t('user.name')" prop="name" :error="updateError.name ? updateError.name[0] : ''">
           <el-input v-model="updateForm.name" />
         </el-form-item>
-        <el-form-item :label="$t('user.email')" prop="email" :error="error.email ? error.email[0] : ''">
+        <el-form-item :label="$t('user.email')" prop="email" :error="updateError.email ? updateError.email[0] : ''">
           <el-input v-model="updateForm.email" />
         </el-form-item>
-        <el-form-item :label="$t('user.password')" prop="password" :error="error.password ? error.password[0] : ''">
+        <el-form-item :label="$t('user.password')" prop="password" :error="updateError.password ? updateError.password[0] : ''">
           <el-input v-model="updateForm.password" show-password :placeholder="$t('user.emptyPasswordText')" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onUpdate('updateForm')">{{ $t('common.submit') }}</el-button>
+          <el-button type="primary" :loading="updateLoading" @click="onUpdate('updateForm')">{{ $t('common.submit') }}</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -190,8 +190,11 @@ export default {
           }
         }]
       },
-      error: {},
+      createError: {},
+      createLoading: false,
       createVisible: false,
+      updateError: {},
+      updateLoading: false,
       updateVisible: false,
       updateId: 0
     }
@@ -201,7 +204,8 @@ export default {
   },
   methods: {
     onUpdate(formName) {
-      this.error = {}
+      this.updateError = {}
+      this.updateLoading = true
       if (this.updateForm.password === '') {
         delete this.updateForm.password
       }
@@ -215,12 +219,15 @@ export default {
       }).catch(reason => {
         const { data } = reason.response
         if (data.code === 422) {
-          this.error = data.data
+          this.updateError = data.data
         }
+      }).finally(() => {
+        this.updateLoading = false
       })
     },
     onCreate(formName) {
-      this.error = {}
+      this.createError = {}
+      this.createLoading = true
       create(this.createForm).then(response => {
         this.$message({
           message: response.message,
@@ -233,8 +240,10 @@ export default {
       }).catch(reason => {
         const { data } = reason.response
         if (data.code === 422) {
-          this.error = data.data
+          this.createError = data.data
         }
+      }).finally(() => {
+        this.createLoading = false
       })
     },
     resetCreateForm(formName) {
@@ -305,6 +314,7 @@ export default {
     },
 
     handleEdit(row) {
+      this.updateError = {}
       user({
         id: row.id
       }).then(response => {

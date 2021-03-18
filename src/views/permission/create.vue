@@ -26,7 +26,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('form')">{{ $t('common.submit') }}</el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit('form')">{{ $t('common.submit') }}</el-button>
         <el-button @click="resetForm('form')">{{ $t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
@@ -64,11 +64,13 @@ export default {
         hidden: 1
       },
       options: { FontAwesome: false, ElementUI: true, addIconList: [], removeIconList: [] },
-      error: {}
+      error: {},
+      loading: false
     }
   },
   methods: {
     onSubmit(formName) {
+      this.loading = true
       this.error = {}
       const form = this.form
       form.guard_name = 'admin'
@@ -87,6 +89,8 @@ export default {
         if (data.code === 422) {
           this.error = data.data
         }
+      }).finally(() => {
+        this.loading = false
       })
     },
     resetForm(formName) {
