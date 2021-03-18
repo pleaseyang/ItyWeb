@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MessageBox, Message, Notification } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken, setToken, removeToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -33,6 +33,11 @@ service.interceptors.request.use(
   }
 )
 
+// 是否正在刷新的标记
+let isRefreshing = false
+// 重试队列，每一项将是一个待执行的函数形式
+let requests = []
+
 // response interceptor
 service.interceptors.response.use(
   /**
@@ -54,10 +59,35 @@ service.interceptors.response.use(
       MessageBox.confirm(data.message, '', {
         type: 'warning'
       }).then(() => {
-        store.dispatch('user/resetToken').then(() => {
-          location.reload()
-        })
+        removeToken()
+        location.reload()
       })
+    } else if (data.code === 401) {
+      const config = error.response.config
+      if (!isRefreshing) {
+        isRefreshing = true
+        return refreshToken().then(res => {
+          const { access_token } = res
+          setToken(access_token)
+          config.headers['Authorization'] = 'Bearer ' + access_token
+          config.baseURL = ''
+          requests.forEach(cb => cb(access_token))
+          requests = []
+          return service(config)
+        }).finally(() => {
+          isRefreshing = false
+        })
+      } else {
+        // 正在刷新token，将返回一个未执行resolve的promise
+        return new Promise((resolve) => {
+          // 将resolve放进队列，用一个函数形式来保存，等token刷新后直接执行
+          requests.push((token) => {
+            config.headers['Authorization'] = 'Bearer ' + token
+            config.baseURL = ''
+            resolve(service(config))
+          })
+        })
+      }
     } else if (data.code === 500) {
       Notification.error({
         title: data.message,
@@ -75,5 +105,9 @@ service.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+
+function refreshToken() {
+  return service.post('/refresh').then(response => response.data)
+}
 
 export default service
