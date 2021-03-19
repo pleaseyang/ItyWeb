@@ -1,5 +1,5 @@
 <template>
-  <div :class="{fullscreen:fullscreen}" class="tinymce-container" :style="{width:containerWidth}">
+  <div v-loading="loading" :class="{fullscreen:fullscreen}" class="tinymce-container" :style="{width:containerWidth}">
     <textarea :id="tinymceId" class="tinymce-textarea" />
     <div v-if="editorImage" class="editor-custom-btn-container">
       <editorImage class="editor-upload-btn" @successCBK="imageSuccessCBK" />
@@ -80,7 +80,8 @@ export default {
         'zh': 'zh_CN',
         'es': 'es_MX',
         'ja': 'ja'
-      }
+      },
+      loading: true
     }
   },
   computed: {
@@ -129,6 +130,7 @@ export default {
       // dynamic load tinymce from cdn
       load(tinymceCDN, (err) => {
         if (err) {
+          console.log(err)
           this.$message.error(err.message)
           return
         }
@@ -138,6 +140,7 @@ export default {
     initTinymce() {
       const _this = this
       window.tinymce.init({
+        skin: 'oxide',
         language: this.language,
         language_url: `https://cdn.jsdelivr.net/npm/tinymce-lang/langs/${this.language}.js`,
         selector: `#${this.tinymceId}`,
@@ -157,24 +160,26 @@ export default {
         imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
         default_link_target: '_blank',
         link_title: false,
+        branding: false,
         statusbar: this.statusbar,
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
         save_onsavecallback: function() {
           return false
+        },
+        setup(editor) {
+          editor.on('FullscreenStateChanged', (e) => {
+            _this.fullscreen = e.state
+          })
         },
         init_instance_callback: editor => {
           if (_this.value) {
             editor.setContent(_this.value)
           }
           _this.hasInit = true
+          _this.loading = false
           editor.on('NodeChange Change KeyUp SetContent', () => {
             this.hasChange = true
             this.$emit('input', editor.getContent())
-          })
-        },
-        setup(editor) {
-          editor.on('FullscreenStateChanged', (e) => {
-            _this.fullscreen = e.state
           })
         },
         // it will try to keep these URLs intact
