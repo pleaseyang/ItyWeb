@@ -64,16 +64,16 @@ const actions = {
         // roles must be a non-empty array
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
-          if (!permissions || permissions.length <= 0) {
-            reject('getInfo: roles or permissions must be a non-null array!')
-          }
+          reject('getInfo: roles or permissions must be a non-null array!')
         }
-        accessedRoutes.push({
-          hidden: true,
-          name: 'user-perimissions',
-          path: 'user-perimissions',
-          children: permissions
-        })
+        if (permissions && permissions.length > 0) {
+          accessedRoutes.push({
+            hidden: true,
+            name: 'user-perimissions',
+            path: 'user-perimissions',
+            children: permissions
+          })
+        }
 
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
