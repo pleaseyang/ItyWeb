@@ -62,8 +62,11 @@ const actions = {
         }
         const { roles, name, avatar, email, accessedRoutes, permissions, unreadNotificationCount } = data
         // roles must be a non-empty array
-        if ((!roles || roles.length <= 0) || (!permissions || permissions.length <= 0)) {
-          reject('getInfo: roles must be a non-null array!')
+        // roles must be a non-empty array
+        if (!roles || roles.length <= 0) {
+          if (!permissions || permissions.length <= 0) {
+            reject('getInfo: roles or permissions must be a non-null array!')
+          }
         }
         accessedRoutes.push({
           hidden: true,
