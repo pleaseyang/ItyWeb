@@ -60,11 +60,17 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-        const { roles, name, avatar, email, accessedRoutes, unreadNotificationCount } = data
+        const { roles, name, avatar, email, accessedRoutes, permissions, unreadNotificationCount } = data
         // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
+        if ((!roles || roles.length <= 0) || (!permissions || permissions.length <= 0)) {
           reject('getInfo: roles must be a non-null array!')
         }
+        accessedRoutes.push({
+          hidden: true,
+          name: 'user-perimissions',
+          path: 'user-perimissions',
+          children: permissions
+        })
 
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
