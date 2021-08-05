@@ -52,6 +52,10 @@ LARAVEL Notifiable Trait 搭建
 ### 部署
 1. `npm run build:prod`
 
+### 报错
+1. 关于 e-icon-picker 报错
+ `复制 lib/e-icon-picker 到 node_modules`
+
 ## 致谢
 * [jetbrains](https://www.jetbrains.com) ![](.github/jetbrains.svg)
 * [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
