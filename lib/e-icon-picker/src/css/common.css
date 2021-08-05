@@ -1,0 +1,16 @@
+[class^="fa"] {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.el-submenu [class^="fa"] {
+    margin-right: 5px;
+    width: 24px;
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

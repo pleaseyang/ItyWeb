@@ -1,0 +1,79 @@
+{
+  "_from": "e-icon-picker@^1.0.4",
+  "_id": "e-icon-picker@1.0.8",
+  "_inBundle": false,
+  "_integrity": "sha512-FV6QfyRUH8ylV24GhuANuUrT3adDe5DDBGn41b1uwRsDBPgt1w87KuqBK7VHkaxk2kjdFNvU1hTRDU5m7HDQqw==",
+  "_location": "/e-icon-picker",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "e-icon-picker@^1.0.4",
+    "name": "e-icon-picker",
+    "escapedName": "e-icon-picker",
+    "rawSpec": "^1.0.4",
+    "saveSpec": null,
+    "fetchSpec": "^1.0.4"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/e-icon-picker/-/e-icon-picker-1.0.8.tgz",
+  "_shasum": "c2843cf68d9aec2eb57889ff0a06f3dd5a9ab72c",
+  "_spec": "e-icon-picker@^1.0.4",
+  "_where": "D:\\VUE项目\\vue-ity-2",
+  "author": {
+    "name": "cnovel.club"
+  },
+  "bugs": {
+    "url": "https://gitee.com/cnovel/e-icon-picker/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "font-awesome": "^4.7.0"
+  },
+  "deprecated": false,
+  "description": "element-ui和font-awesome图标选择器",
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "autoprefixer": "^9.8.6",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-component": "^1.1.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^4.2.2",
+    "cssnano": "^4.1.10",
+    "element-ui": "^2.13.2",
+    "file-loader": "^6.0.0",
+    "mini-css-extract-plugin": "^0.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "vue": "^2.6.12",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "homepage": "http://doc.icon.cnovel.club",
+  "keywords": [
+    "vue",
+    "icon-picker",
+    "e-icon-picker",
+    "iconPicker",
+    "eiconPicker",
+    "icon picker",
+    "icon"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "e-icon-picker",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/cnovel/e-icon-picker"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.config.js"
+  },
+  "version": "1.0.8"
+}
