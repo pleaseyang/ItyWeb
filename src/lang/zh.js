@@ -298,7 +298,13 @@ export default {
     emptyPasswordText: '留空不修改',
     status: '状态',
     status1Text: '正常',
-    status0Text: '禁止'
+    status0Text: '禁止',
+    navSetting: {
+      refresh: '刷新页面后生效',
+      cache: '取消缓存',
+      affix: '固定 Tag',
+      need: '需开启 Tags-View'
+    }
   },
   user: {
     name: '用户名',

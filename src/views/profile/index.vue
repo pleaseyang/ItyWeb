@@ -14,6 +14,7 @@
         <el-button type="primary" @click="onUpdate('updateForm')">{{ $t('common.submit') }}</el-button>
       </el-form-item>
     </el-form>
+    <nav-setting/>
   </div>
 </template>
 
@@ -23,6 +24,9 @@ import { getInfo } from '@/api/user'
 import store from '@/store'
 export default {
   name: 'Profile',
+  components: {
+    navSetting: () => import('./nav/index')
+  },
   data() {
     return {
       updateForm: {

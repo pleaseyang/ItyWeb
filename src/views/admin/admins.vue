@@ -231,7 +231,7 @@ import SyncRole from './syncRoles'
 import SyncPermission from './syncPermissions'
 
 export default {
-  name: 'Admins',
+  name: 'admin.admins',
   components: { SyncRole, SyncPermission },
   data() {
     return {

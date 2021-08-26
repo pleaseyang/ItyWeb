@@ -136,7 +136,7 @@
 import { logs } from '@/api/nginx'
 import { rTime } from '@/utils'
 export default {
-  name: 'Logs',
+  name: 'nginx.logs',
   data() {
     return {
       total: 0,

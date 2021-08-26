@@ -155,7 +155,7 @@ import jsonView from 'vue-json-views'
 import BackToTop from '@/components/BackToTop'
 
 export default {
-  name: 'ExceptionErrors',
+  name: 'exceptionError.exceptionErrors',
   components: {
     jsonView,
     BackToTop

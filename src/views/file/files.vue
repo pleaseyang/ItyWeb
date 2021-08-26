@@ -198,7 +198,7 @@ import { Message } from 'element-ui'
 import { rTime } from '@/utils'
 
 export default {
-  name: 'Files',
+  name: 'file.files',
   components: {
     help,
     uploadFile

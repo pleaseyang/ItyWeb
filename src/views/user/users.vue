@@ -139,7 +139,7 @@ import { rTime } from '@/utils'
 import { users, user, deleted, create, update } from '@/api/user'
 
 export default {
-  name: 'Users',
+  name: 'user.users',
   data() {
     return {
       createForm: {

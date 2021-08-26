@@ -54,3 +54,27 @@ export function syncPermissions(data) {
     data
   })
 }
+
+export function nav(data) {
+  return request({
+    url: '/nav',
+    method: 'post',
+    data
+  })
+}
+
+export function navSetNoCache(data) {
+  return request({
+    url: '/nav/set/noCache',
+    method: 'post',
+    data
+  })
+}
+
+export function navSetAffix(data) {
+  return request({
+    url: '/nav/set/affix',
+    method: 'post',
+    data
+  })
+}

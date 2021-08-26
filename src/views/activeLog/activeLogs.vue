@@ -152,7 +152,7 @@ import jsonView from 'vue-json-views'
 import BackToTop from '@/components/BackToTop'
 
 export default {
-  name: 'ActiveLogs',
+  name: 'activeLog.activeLogs',
   components: {
     jsonView,
     BackToTop

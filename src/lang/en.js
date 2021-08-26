@@ -298,7 +298,13 @@ export default {
     emptyPasswordText: 'Leave blank and do not modify',
     status: 'Status',
     status1Text: 'Active',
-    status0Text: 'Un active'
+    status0Text: 'Un active',
+    navSetting: {
+      refresh: 'Effective after refreshing the page',
+      cache: 'Cancel page cache',
+      affix: 'Fixed Tag',
+      need: 'Need Tags-View'
+    }
   },
   user: {
     name: 'User name',

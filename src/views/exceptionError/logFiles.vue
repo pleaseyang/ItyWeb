@@ -49,7 +49,7 @@ import { rTime } from '@/utils'
 import { files, file } from '@/api/exception'
 
 export default {
-  name: 'LogFiles',
+  name: 'exceptionError.logFiles',
   data() {
     return {
       files: [],
