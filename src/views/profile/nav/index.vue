@@ -3,11 +3,12 @@
     <el-col :span="24">
       <el-table
         v-loading="loading"
+        :data="data"
         stripe
-        :data="data">
+      >
         <el-table-column>
           <template slot="header">
-            <el-alert :title="$t('admin.navSetting.refresh')" type="warning" :closable="false"/>
+            <el-alert :title="$t('admin.navSetting.refresh')" type="warning" :closable="false" />
           </template>
           <template slot-scope="scope">
             <i :class="scope.row.icon" /> {{ $t('route.' + scope.row.name) }}
@@ -15,7 +16,7 @@
         </el-table-column>
         <el-table-column :label="$t('admin.navSetting.cache')">
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.no_cache" @change="cacheChange"/>
+            <el-switch v-model="scope.row.no_cache" @change="cacheChange" />
           </template>
         </el-table-column>
         <el-table-column>
@@ -26,7 +27,7 @@
             </el-tooltip>
           </template>
           <template slot-scope="scope">
-            <el-switch v-model="scope.row.affix"  @change="affixChange"/>
+            <el-switch v-model="scope.row.affix" @change="affixChange" />
           </template>
         </el-table-column>
       </el-table>
