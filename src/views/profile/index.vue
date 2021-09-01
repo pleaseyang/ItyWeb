@@ -14,7 +14,7 @@
         <el-button type="primary" @click="onUpdate('updateForm')">{{ $t('common.submit') }}</el-button>
       </el-form-item>
     </el-form>
-    <nav-setting/>
+    <nav-setting />
   </div>
 </template>
 
