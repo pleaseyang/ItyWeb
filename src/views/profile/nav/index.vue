@@ -11,7 +11,8 @@
             <el-alert :title="$t('admin.navSetting.refresh')" type="warning" :closable="false" />
           </template>
           <template slot-scope="scope">
-            <i :class="scope.row.icon" /> {{ $t('route.' + scope.row.name) }}
+            <e-icon :icon-name="scope.row.icon" />
+            {{ $t('route.' + scope.row.name) }}
           </template>
         </el-table-column>
         <el-table-column :label="$t('admin.navSetting.cache')">

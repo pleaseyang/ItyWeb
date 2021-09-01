@@ -26,6 +26,14 @@ import elDragDialog from '@/directive/el-drag-dialog'
 import VueHighlightJS from 'vue-highlightjs'
 import 'highlight.js/styles/atom-one-dark.css'
 
+import iconPicker from 'e-icon-picker'
+import 'e-icon-picker/lib/symbol.js' // 基本彩色图标库
+import 'e-icon-picker/lib/index.css' // 基本样式，包含基本图标
+import 'font-awesome/css/font-awesome.min.css' // font-awesome 图标库
+import 'element-ui/lib/theme-chalk/icon.css' // element-ui 图标库
+
+Vue.use(iconPicker, { FontAwesome: true, ElementUI: true, eIcon: true, eIconSymbol: true })
+
 Vue.use(VueHighlightJS)
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size

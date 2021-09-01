@@ -8,7 +8,7 @@
         <el-input v-model="form.title" maxlength="60" show-word-limit />
       </el-form-item>
       <el-form-item :label="$t('permission.icon')" prop="icon" :error="error.icon ? error.icon[0] : ''">
-        <e-icon-picker v-model="form.icon" :options="options" />
+        <e-icon-picker v-model="form.icon" />
       </el-form-item>
       <el-form-item :label="$t('permission.path')" prop="path" :error="error.path ? error.path[0] : ''">
         <el-input v-model="form.path" maxlength="60" show-word-limit />
@@ -35,12 +35,8 @@
 
 <script>
 import { create } from '@/api/permission'
-import { EIconPicker } from 'e-icon-picker'
-import 'e-icon-picker/dist/index.css' // 基础样式
-import 'e-icon-picker/dist/index.css' // fontAwesome 图标库样式
 export default {
   name: 'Create',
-  components: { EIconPicker },
   props: {
     success: {
       type: Function,
@@ -63,7 +59,6 @@ export default {
         sort: 1,
         hidden: 1
       },
-      options: { FontAwesome: false, ElementUI: true, addIconList: [], removeIconList: [] },
       error: {},
       loading: false
     }
@@ -101,5 +96,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

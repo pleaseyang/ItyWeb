@@ -55,7 +55,7 @@
               }"
               class="custom-tree-node"
             >
-              <span><i :class="data.icon" /> {{ node.label }} <small class="color-909">{{ data.name }}</small></span>
+              <span><e-icon :icon-name="data.icon" /> {{ node.label }} <small class="color-909">{{ data.name }}</small></span>
               <span>
                 <el-button
                   v-permission="'permission.create'"
