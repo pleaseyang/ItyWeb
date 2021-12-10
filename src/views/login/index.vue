@@ -125,9 +125,11 @@ export default {
         })
         .catch((reason) => {
           this.loading = false
-          const { data } = reason.response
-          if (data.code === 422) {
-            this.error = data.data
+          if (reason.response !== undefined) {
+            const { data } = reason.response
+            if (data.code === 422) {
+              this.error = data.data
+            }
           }
         })
     },

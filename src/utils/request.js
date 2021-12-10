@@ -112,6 +112,7 @@ service.interceptors.response.use(
         closeOnHashChange: false,
         roundButton: true
       })
+      return Promise.reject(error)
     }
   }
 )
