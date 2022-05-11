@@ -75,11 +75,14 @@ export default {
   methods: {
     info() {
       if (this.id > 0) {
+        this.loading = true
         permission({
           id: this.id
         }).then(response => {
           this.error = {}
           this.form = response.data
+        }).finally(_ => {
+          this.loading = false
         })
       }
     },
