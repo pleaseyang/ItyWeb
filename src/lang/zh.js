@@ -90,7 +90,8 @@ export default {
     },
     nginx: {
       logs: 'NGINX日志'
-    }
+    },
+    dict: '字典管理'
   },
   navbar: {
     dashboard: '首页',
@@ -388,5 +389,30 @@ export default {
     all: '所有',
     yes: '是',
     no: '否'
+  },
+  dictType: {
+    name: '字典名称',
+    type: '字典类型',
+    status: '状态',
+    status_1: '可用',
+    status_0: '禁用',
+    status_all: '全部',
+    remark: '备注'
+  },
+  dictData: {
+    title: '字典数据',
+    sort: '排序',
+    label: '字典标签',
+    value: '字典键值',
+    list_class: '表格回显样式',
+    default: '是否默认',
+    default_1: '是',
+    default_0: '否',
+    default_all: '全部',
+    status: '状态',
+    status_1: '可用',
+    status_0: '禁用',
+    status_all: '全部',
+    remark: '备注'
   }
 }

@@ -90,7 +90,8 @@ export default {
     },
     nginx: {
       logs: 'NGINX Logs'
-    }
+    },
+    dict: 'Dictionary Manage'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -388,5 +389,30 @@ export default {
     all: 'All',
     yes: 'Yes',
     no: 'No'
+  },
+  dictType: {
+    name: 'Dictionary name',
+    type: 'Dictionary type',
+    status: 'Status',
+    status_1: 'Available',
+    status_0: 'Disable',
+    status_all: 'Whole',
+    remark: 'Remark'
+  },
+  dictData: {
+    title: 'Dict Data',
+    sort: 'Sort',
+    label: 'Label',
+    value: 'Value',
+    list_class: 'Table echo style',
+    default: 'Default',
+    default_1: 'Yes',
+    default_0: 'No',
+    default_all: 'Whole',
+    status: 'Status',
+    status_1: 'Available',
+    status_0: 'Disable',
+    status_all: 'Whole',
+    remark: 'Remark'
   }
 }
