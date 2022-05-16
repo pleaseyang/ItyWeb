@@ -146,12 +146,12 @@ export default {
       this.getList()
     },
     onSubmit() {
-      this.offset = 0
+      this.search.offset = 1
       this.getList()
     },
     resetForm(formName) {
       this.$refs.search.resetFields()
-      this.offset = 0
+      this.search.offset = 1
       this.getList()
     },
     getList() {
