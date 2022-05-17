@@ -231,7 +231,9 @@ export default {
     seeInfo: 'View details',
     moreScreening: 'More screening',
     collapseScreening: 'Collapse screening',
-    loading: 'Loading'
+    loading: 'Loading',
+    yes: 'Yes',
+    no: 'No'
   },
   permission: {
     keywords: 'Enter keywords to filter',
