@@ -95,3 +95,11 @@ export function dictDataListClass(data) {
     data
   })
 }
+
+export function dictDataSelect(data) {
+  return request({
+    url: '/dictData/select',
+    method: 'post',
+    data
+  })
+}
