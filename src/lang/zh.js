@@ -233,7 +233,9 @@ export default {
     collapseScreening: '收起筛选',
     loading: '加载中',
     yes: '是',
-    no: '否'
+    no: '否',
+    alreadyUpload: '文件已上传',
+    uploadTip: '只能上传 xls/xlsx/csv/pdf/word/txt/mp4 文件'
   },
   permission: {
     keywords: '输入关键字进行过滤',

@@ -56,3 +56,30 @@ export function fileUploadUnPermission(data) {
     data
   })
 }
+
+export function fileUploadImage(data) {
+  return request({
+    url: '/file/uploadImage',
+    method: 'post',
+    timeout: 0,
+    data
+  })
+}
+
+export function fileUploadFile(data) {
+  return request({
+    url: '/file/uploadFile',
+    method: 'post',
+    timeout: 0,
+    data
+  })
+}
+
+export function fileRemoveFile(data) {
+  return request({
+    url: '/file/removeFile',
+    method: 'post',
+    timeout: 0,
+    data
+  })
+}

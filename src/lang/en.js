@@ -233,7 +233,9 @@ export default {
     collapseScreening: 'Collapse screening',
     loading: 'Loading',
     yes: 'Yes',
-    no: 'No'
+    no: 'No',
+    alreadyUpload: 'Already upload',
+    uploadTip: 'Only XLS / xlsx / CSV / PDF / word / txt / mp4 files can be uploaded'
   },
   permission: {
     keywords: 'Enter keywords to filter',
