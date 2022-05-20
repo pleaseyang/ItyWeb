@@ -130,7 +130,8 @@ export default {
       const editor = createEditor({
         selector: `#editor-container${this.id}`,
         config: this.editorConfig,
-        mode: this.mode
+        mode: this.mode,
+        html: this.value
       })
       this.editor = Object.seal(editor)
       if (this.toolbarShow) {
