@@ -21,7 +21,7 @@
           </el-form-item>
           <el-form-item>
             <el-button :loading="loading" type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
-            <el-button @click="resetForm">{{ $t('common.reset') }}</el-button>
+            <el-button :loading="loading" @click="resetForm">{{ $t('common.reset') }}</el-button>
           </el-form-item>
         </el-form>
       </el-col>

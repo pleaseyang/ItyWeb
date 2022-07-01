@@ -29,8 +29,8 @@
           </el-form-item>
           <el-col>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
-              <el-button @click="resetForm('formInline')">{{ $t('common.reset') }}</el-button>
+              <el-button :loading="loading" type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
+              <el-button :loading="loading" @click="resetForm('formInline')">{{ $t('common.reset') }}</el-button>
             </el-form-item>
           </el-col>
         </el-form>
@@ -302,6 +302,12 @@ export default {
       return rTime(row[column.property])
     },
     handleDelete(id) {
+      const loading = this.$loading({
+        lock: true,
+        text: this.$t('common.loading'),
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       deleted({
         id: id
       }).then(response => {
@@ -310,10 +316,18 @@ export default {
           type: 'success'
         })
         this.getUsers()
+      }).finally(() => {
+        loading.close()
       })
     },
 
     handleEdit(row) {
+      const loading = this.$loading({
+        lock: true,
+        text: this.$t('common.loading'),
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
       this.updateError = {}
       user({
         id: row.id
@@ -321,6 +335,8 @@ export default {
         const { data } = response
         this.updateVisible = true
         this.updateForm = data
+      }).finally(() => {
+        loading.close()
       })
     }
   }
