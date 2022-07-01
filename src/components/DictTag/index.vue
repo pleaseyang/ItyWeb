@@ -1,7 +1,10 @@
 <template>
-  <el-tag :type="dictDataTag.list_class">
+  <el-tag v-if="dictDataTag.list_class" :type="dictDataTag.list_class">
     {{ dictDataTag.label }}
   </el-tag>
+  <span v-else>
+    {{ dictDataTag.label }}
+  </span>
 </template>
 
 <script>
