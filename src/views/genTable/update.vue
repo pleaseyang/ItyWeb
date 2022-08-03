@@ -250,6 +250,7 @@ export default {
     },
     handleGen() {
       this.genLoading = true
+      this.error = {}
       gen(this.form).then(response => {
         const { path = '' } = response.data
         download({
@@ -270,8 +271,14 @@ export default {
         }).finally(_ => {
           this.genLoading = false
         })
-      }).catch(_ => {
+      }).catch(reason => {
         this.genLoading = false
+        const { data } = reason.response
+        if (data.code === 422) {
+          for (const k in data.data) {
+            this.error[k] = data.data[k].toString()
+          }
+        }
       })
     }
   }
