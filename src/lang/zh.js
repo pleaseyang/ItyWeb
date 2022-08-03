@@ -422,5 +422,40 @@ export default {
     status_0: '禁用',
     status_all: '全部',
     remark: '备注'
+  },
+  genTable: {
+    name: '表名称',
+    comment: '表描述',
+    engine: '表引擎',
+    charset: '字符集',
+    collation: '排序规则',
+    created_at_start: '创建时间开始',
+    created_at_end: '创建时间结束',
+    updated_at_start: '更新时间开始',
+    updated_at_end: '更新时间结束',
+    select_table: '请选择要生成的表',
+    pid: '上级分类',
+    pid_placeholder: '留空默认为顶级分类',
+    confirm_message: '请确认已提交表信息',
+    gen: '生成代码',
+    table: {
+      name: '名称',
+      comment: '备注',
+      type: '类型',
+      _required: '必填',
+      _insert: '新增',
+      _update: '编辑',
+      _list: '列表',
+      _select: '查询',
+      _query: '查询方式',
+      _show: '显示方式',
+      dict_type_id: '字典',
+      _unique: '唯一',
+      _foreign: '外键',
+      _foreign_table: '外键表',
+      _foreign_column: '外键字段',
+      _foreign_show_column: '外键显示字段',
+      select: '请选择'
+    }
   }
 }

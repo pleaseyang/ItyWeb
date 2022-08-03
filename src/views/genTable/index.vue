@@ -5,22 +5,22 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleCreate">{{ $t('common.create') }}</el-button>
         </el-form-item>
-        <el-form-item label="表名称" prop="name">
+        <el-form-item :label="$t('genTable.name')" prop="name">
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="表描述" prop="comment">
+        <el-form-item :label="$t('genTable.comment')" prop="comment">
           <el-input v-model="form.comment" />
         </el-form-item>
-        <el-form-item label="表引擎" prop="engine">
+        <el-form-item :label="$t('genTable.engine')" prop="engine">
           <el-input v-model="form.engine" />
         </el-form-item>
-        <el-form-item label="字符集" prop="charset">
+        <el-form-item :label="$t('genTable.charset')" prop="charset">
           <el-input v-model="form.charset" />
         </el-form-item>
-        <el-form-item label="排序规则" prop="collation">
+        <el-form-item :label="$t('genTable.collation')" prop="collation">
           <el-input v-model="form.collation" />
         </el-form-item>
-        <el-form-item label="创建时间开始" prop="created_at_start">
+        <el-form-item :label="$t('genTable.created_at_start')" prop="created_at_start">
           <el-date-picker
             v-model="form.created_at_start"
             type="datetime"
@@ -28,7 +28,7 @@
             time-arrow-control
           />
         </el-form-item>
-        <el-form-item label="创建时间结束" prop="created_at_end">
+        <el-form-item :label="$t('genTable.created_at_end')" prop="created_at_end">
           <el-date-picker
             v-model="form.created_at_end"
             type="datetime"
@@ -36,7 +36,7 @@
             time-arrow-control
           />
         </el-form-item>
-        <el-form-item label="更新时间开始" prop="updated_at_start">
+        <el-form-item :label="$t('genTable.updated_at_start')" prop="updated_at_start">
           <el-date-picker
             v-model="form.updated_at_start"
             type="datetime"
@@ -44,7 +44,7 @@
             time-arrow-control
           />
         </el-form-item>
-        <el-form-item label="更新时间结束" prop="updated_at_end">
+        <el-form-item :label="$t('genTable.updated_at_end')" prop="updated_at_end">
           <el-date-picker
             v-model="form.updated_at_end"
             type="datetime"
@@ -66,13 +66,13 @@
         :default-sort="{prop: form.sort, order: form.order}"
         @sort-change="tableSortChange"
       >
-        <el-table-column prop="name" label="表名称" sortable />
-        <el-table-column prop="comment" label="表描述" sortable />
-        <el-table-column prop="engine" label="表引擎" sortable />
-        <el-table-column prop="charset" label="字符集" sortable />
-        <el-table-column prop="collation" label="排序规则" sortable />
-        <el-table-column prop="created_at" label="创建时间" sortable />
-        <el-table-column prop="updated_at" label="更新时间" sortable />
+        <el-table-column prop="name" :label="$t('genTable.name')" sortable />
+        <el-table-column prop="comment" :label="$t('genTable.comment')" sortable />
+        <el-table-column prop="engine" :label="$t('genTable.engine')" sortable />
+        <el-table-column prop="charset" :label="$t('genTable.charset')" sortable />
+        <el-table-column prop="collation" :label="$t('genTable.collation')" sortable />
+        <el-table-column prop="created_at" :label="$t('common.createdAt')" sortable />
+        <el-table-column prop="updated_at" :label="$t('common.updatedAt')" sortable />
         <el-table-column :label="$t('common.handle')" width="300px">
           <template scope="scope">
             <el-button icon="el-icon-edit-outline" type="primary" @click="handleEdit(scope.row)">{{ $t('common.update') }}</el-button>

@@ -11,14 +11,14 @@
       <i class="el-icon-circle-plus-outline" /> {{ $t('common.create') }}
     </template>
     <el-form ref="form" :model="form" label-position="top" @submit.native.prevent="handleCreate">
-      <el-form-item label="请选择要生成的表" prop="table" class="form-item-required" :error="error.table">
+      <el-form-item :label="$t('genTable.select_table')" prop="table" class="form-item-required" :error="error.table">
         <el-table ref="table" v-loading="tableLoading" :data="tableData" stripe>
           <el-table-column type="selection" width="55" />
-          <el-table-column prop="name" label="表名称" />
-          <el-table-column prop="comment" label="表描述" />
-          <el-table-column prop="engine" label="表引擎" />
-          <el-table-column prop="charset" label="字符集" />
-          <el-table-column prop="collation" label="排序规则" />
+          <el-table-column prop="name" :label="$t('genTable.name')" />
+          <el-table-column prop="comment" :label="$t('genTable.comment')" />
+          <el-table-column prop="engine" :label="$t('genTable.engine')" />
+          <el-table-column prop="charset" :label="$t('genTable.charset')" />
+          <el-table-column prop="collation" :label="$t('genTable.collation')" />
         </el-table>
       </el-form-item>
       <el-form-item>

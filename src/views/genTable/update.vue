@@ -12,24 +12,24 @@
     </template>
     <el-form ref="form" :model="form" label-position="top">
       <el-col :span="4">
-        <el-form-item label="表名称" prop="name" :error="error.name">
+        <el-form-item :label="$t('genTable.name')" prop="name" :error="error.name">
           {{ form.name }}
         </el-form-item>
       </el-col>
       <el-col :span="7" :offset="1">
-        <el-form-item label="表描述" prop="comment" class="form-item-required" :error="error.comment">
+        <el-form-item :label="$t('genTable.comment')" prop="comment" class="form-item-required" :error="error.comment">
           <el-input v-model="form.comment" clearable />
         </el-form-item>
       </el-col>
       <el-col :span="11" :offset="1">
-        <el-form-item label="上级分类" prop="pid" class="form-item-required" :error="error.pid">
+        <el-form-item :label="$t('genTable.pid')" prop="pid" class="form-item-required" :error="error.pid">
           <el-col :span="18">
             <el-cascader
               v-if="permission.length > 0"
               v-model="form.pid"
               :options="permission"
               :props="props"
-              placeholder="留空默认为顶级分类"
+              :placeholder="$t('genTable.pid_placeholder')"
               clearable
               show-all-levels
               filterable
@@ -37,94 +37,94 @@
             />
           </el-col>
           <el-col :span="5" :offset="1">
-            <el-tooltip class="item" effect="dark" content="请确认已提交表信息" placement="left">
-              <el-button type="primary" :loading="genLoading" @click="handleGen">生成代码</el-button>
+            <el-tooltip class="item" effect="dark" :content="$t('genTable.confirm_message')" placement="left">
+              <el-button type="primary" :loading="genLoading" @click="handleGen">{{ $t('genTable.gen') }}</el-button>
             </el-tooltip>
           </el-col>
         </el-form-item>
       </el-col>
       <el-col :span="24">
         <el-table ref="table" :data="form.gen_table_columns" stripe>
-          <el-table-column prop="name" label="名称" width="100" />
-          <el-table-column prop="comment" label="备注" width="150">
+          <el-table-column prop="name" :label="$t('genTable.table.name')" width="100" />
+          <el-table-column prop="comment" :label="$t('genTable.table.comment')" width="150">
             <template scope="scope">
               <el-input v-model="scope.row.comment" />
             </template>
           </el-table-column>
-          <el-table-column prop="type" label="类型" width="100" />
-          <el-table-column prop="_required" label="必填" width="55">
+          <el-table-column prop="type" :label="$t('genTable.table.type')" width="100" />
+          <el-table-column prop="_required" :label="$t('genTable.table._required')" width="55">
             <template scope="scope">
               <el-checkbox v-model="scope.row._required" />
             </template>
           </el-table-column>
-          <el-table-column prop="_insert" label="新增" width="55">
+          <el-table-column prop="_insert" :label="$t('genTable.table._insert')" width="55">
             <template scope="scope">
               <el-checkbox v-model="scope.row._insert" />
             </template>
           </el-table-column>
-          <el-table-column prop="_update" label="编辑" width="55">
+          <el-table-column prop="_update" :label="$t('genTable.table._update')" width="55">
             <template scope="scope">
               <el-checkbox v-model="scope.row._update" />
             </template>
           </el-table-column>
-          <el-table-column prop="_list" label="列表" width="55">
+          <el-table-column prop="_list" :label="$t('genTable.table._list')" width="55">
             <template scope="scope">
               <el-checkbox v-model="scope.row._list" />
             </template>
           </el-table-column>
-          <el-table-column prop="_select" label="查询" width="55">
+          <el-table-column prop="_select" :label="$t('genTable.table._select')" width="55">
             <template scope="scope">
               <el-checkbox v-model="scope.row._select" />
             </template>
           </el-table-column>
-          <el-table-column prop="_query" label="查询方式">
+          <el-table-column prop="_query" :label="$t('genTable.table._query')">
             <template scope="scope">
-              <el-select v-model="scope.row._query" placeholder="请选择">
+              <el-select v-model="scope.row._query" :placeholder="$t('genTable.table.select')">
                 <el-option v-for="item in select" :key="item" :label="item" :value="item" />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="_show" label="显示类型">
+          <el-table-column prop="_show" :label="$t('genTable.table._show')">
             <template scope="scope">
-              <el-select v-model="scope.row._show" placeholder="请选择" @change="handleChangeShow(scope.row)">
+              <el-select v-model="scope.row._show" :placeholder="$t('genTable.table.select')" @change="handleChangeShow(scope.row)">
                 <el-option v-for="item in type" :key="item" :label="item" :value="item" />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="dict_type_id" label="字典">
+          <el-table-column prop="dict_type_id" :label="$t('genTable.table.dict_type_id')">
             <template scope="scope">
-              <el-select v-model="scope.row.dict_type_id" placeholder="请选择" clearable filterable @change="handleChangeDict(scope.row)">
+              <el-select v-model="scope.row.dict_type_id" :placeholder="$t('genTable.table.select')" clearable filterable @change="handleChangeDict(scope.row)">
                 <el-option v-for="item in dict" :key="item.id" :label="item.name" :value="item.id" />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="_unique" label="唯一" width="55">
+          <el-table-column prop="_unique" :label="$t('genTable.table._unique')" width="55">
             <template scope="scope">
               <el-checkbox v-model="scope.row._unique" />
             </template>
           </el-table-column>
-          <el-table-column prop="_foreign" label="外键" width="55">
+          <el-table-column prop="_foreign" :label="$t('genTable.table._foreign')" width="55">
             <template scope="scope">
               <el-checkbox v-model="scope.row._foreign" />
             </template>
           </el-table-column>
-          <el-table-column prop="_foreign" label="外键表">
+          <el-table-column prop="_foreign" :label="$t('genTable.table._foreign_table')">
             <template scope="scope">
-              <el-select v-model="scope.row._foreign_table" placeholder="请选择" clearable filterable>
+              <el-select v-model="scope.row._foreign_table" :placeholder="$t('genTable.table.select')" clearable filterable>
                 <el-option v-for="item in tables" :key="item.name" :label="`${item.name}(${item.comment})`" :value="item.name" />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="_foreign" label="外键关联字段">
+          <el-table-column prop="_foreign" :label="$t('genTable.table._foreign_column')">
             <template scope="scope">
-              <el-select v-model="scope.row._foreign_column" placeholder="请选择" clearable filterable>
+              <el-select v-model="scope.row._foreign_column" :placeholder="$t('genTable.table.select')" clearable filterable>
                 <el-option v-for="item in scope.row._foreign_table ? tables.find((e) => e.name === scope.row._foreign_table).info.columns : []" :key="item.name" :label="item.name" :value="item.name" />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column prop="_foreign" label="外键展示字段">
+          <el-table-column prop="_foreign" :label="$t('genTable.table._foreign_show_column')">
             <template scope="scope">
-              <el-select v-model="scope.row._foreign_show" placeholder="请选择" clearable filterable>
+              <el-select v-model="scope.row._foreign_show" :placeholder="$t('genTable.table.select')" clearable filterable>
                 <el-option v-for="item in scope.row._foreign_table ? tables.find((e) => e.name === scope.row._foreign_table).info.columns : []" :key="item.name" :label="item.name" :value="item.name" />
               </el-select>
             </template>
@@ -252,33 +252,24 @@ export default {
       this.genLoading = true
       gen(this.form).then(response => {
         const { path = '' } = response.data
-        if (path) {
-          download({
-            file: path
-          }).then(response2 => {
-            const a = document.createElement('a')
-            const objectUrl = URL.createObjectURL(response2)
-            a.setAttribute('href', objectUrl)
-            a.click()
-          }).catch(reason => {
-            const data = reason.response.data
-            const reader = new FileReader()
-            reader.readAsText(data)
-            reader.onload = () => {
-              const { message } = JSON.parse(reader.result)
-              this.$message({ showClose: true, type: 'error', message: message })
-            }
-          }).finally(_ => {
-            this.genLoading = false
-          })
-        } else {
+        download({
+          file: path
+        }).then(response2 => {
+          const a = document.createElement('a')
+          const objectUrl = URL.createObjectURL(response2)
+          a.setAttribute('href', objectUrl)
+          a.click()
+        }).catch(reason => {
+          const data = reason.response.data
+          const reader = new FileReader()
+          reader.readAsText(data)
+          reader.onload = () => {
+            const { message } = JSON.parse(reader.result)
+            this.$message({ showClose: true, type: 'error', message: message })
+          }
+        }).finally(_ => {
           this.genLoading = false
-          this.$message({
-            showClose: true,
-            message: '获取文件路径失败',
-            type: 'success'
-          })
-        }
+        })
       }).catch(_ => {
         this.genLoading = false
       })
