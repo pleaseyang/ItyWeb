@@ -5,59 +5,26 @@
         <el-form-item>
           <el-button type="primary" icon="el-icon-circle-plus-outline" @click="handleCreate">{{ $t('common.create') }}</el-button>
         </el-form-item>
-        <el-form-item label="创建管理员" prop="admin_id">
-          <el-select v-model="form.admin_id" clearable filterable>
-            <el-option
-              v-for="item in dictTypeSelectData"
-              :key="item.id"
-              :value="item.id"
-              :label="item.name"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="姓名" prop="name">
+        <el-form-item label="表名称" prop="name">
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="性别" prop="sex">
-          <el-select v-model="form.sex" clearable filterable>
-            <el-option
-              v-for="item in dict.filter((e) => e.dict_type_id === 43)"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
+        <el-form-item label="表描述" prop="comment">
+          <el-input v-model="form.comment" />
         </el-form-item>
-        <el-form-item label="学号" prop="number">
-          <el-input v-model="form.number" />
+        <el-form-item label="表引擎" prop="engine">
+          <el-input v-model="form.engine" />
         </el-form-item>
-        <el-form-item label="是不是三好学生" prop="sgood">
-          <el-select v-model="form.sgood" clearable>
-            <el-option :key="1" :value="1" :label="$t('common.yes')" />
-            <el-option :key="0" :value="0" :label="$t('common.no')" />
-          </el-select>
+        <el-form-item label="字符集" prop="charset">
+          <el-input v-model="form.charset" />
         </el-form-item>
-        <el-form-item label="出生日期开始" prop="birthday_at_start">
-          <el-date-picker
-            v-model="form.birthday_at_start"
-            type="datetime"
-            format="yyyy-MM-dd HH:mm:ss"
-            time-arrow-control
-          />
-        </el-form-item>
-        <el-form-item label="出生日期结束" prop="birthday_at_end">
-          <el-date-picker
-            v-model="form.birthday_at_end"
-            type="datetime"
-            format="yyyy-MM-dd HH:mm:ss"
-            time-arrow-control
-          />
+        <el-form-item label="排序规则" prop="collation">
+          <el-input v-model="form.collation" />
         </el-form-item>
         <el-form-item label="创建时间开始" prop="created_at_start">
           <el-date-picker
             v-model="form.created_at_start"
             type="datetime"
-            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
             time-arrow-control
           />
         </el-form-item>
@@ -65,7 +32,7 @@
           <el-date-picker
             v-model="form.created_at_end"
             type="datetime"
-            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
             time-arrow-control
           />
         </el-form-item>
@@ -73,7 +40,7 @@
           <el-date-picker
             v-model="form.updated_at_start"
             type="datetime"
-            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
             time-arrow-control
           />
         </el-form-item>
@@ -81,7 +48,7 @@
           <el-date-picker
             v-model="form.updated_at_end"
             type="datetime"
-            format="yyyy-MM-dd HH:mm:ss"
+            value-format="yyyy-MM-dd HH:mm:ss"
             time-arrow-control
           />
         </el-form-item>
@@ -99,39 +66,11 @@
         :default-sort="{prop: form.sort, order: form.order}"
         @sort-change="tableSortChange"
       >
-        <el-table-column prop="admin_id" label="创建管理员" sortable>
-          <template scope="scope">
-            <ForeignString v-if="dictTypeSelectData.length > 0" column="id" show="name" :data="dictTypeSelectData" :value="scope.row.admin_id" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" sortable />
-        <el-table-column prop="avatar" label="头像" sortable>
-          <template scope="scope">
-            <el-image class="table-image table-image-50" :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]">
-              <div slot="error" class="image-error-slot">
-                <i class="el-icon-picture-outline" />
-              </div>
-            </el-image>
-          </template>
-        </el-table-column>
-        <el-table-column prop="sex" label="性别" sortable>
-          <template scope="scope">
-            <DictTag v-if="dict.length > 0" :dict-data="dict" :dict-type-id="43" :value="scope.row.sex" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="birthday_at" label="出生日期" sortable />
-        <el-table-column prop="number" label="学号" sortable />
-        <el-table-column prop="sgood" label="是不是三好学生" sortable>
-          <template scope="scope">
-            <el-tag v-if="scope.row.sgood" type="success">{{ $t('common.yes') }}</el-tag>
-            <el-tag v-else type="danger">{{ $t('common.no') }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column prop="dangan" label="档案word" sortable>
-          <template scope="scope">
-            <el-link v-if="scope.row.dangan" icon="el-icon-download" :underline="false" :href="scope.row.dangan" target="_blank">{{ $t('common.download') }}</el-link>
-          </template>
-        </el-table-column>
+        <el-table-column prop="name" label="表名称" sortable />
+        <el-table-column prop="comment" label="表描述" sortable />
+        <el-table-column prop="engine" label="表引擎" sortable />
+        <el-table-column prop="charset" label="字符集" sortable />
+        <el-table-column prop="collation" label="排序规则" sortable />
         <el-table-column prop="created_at" label="创建时间" sortable />
         <el-table-column prop="updated_at" label="更新时间" sortable />
         <el-table-column :label="$t('common.handle')" width="300px">
@@ -159,17 +98,13 @@
 </template>
 
 <script>
-import { dictTypeSelect } from '@/api/dictTypeApi'
-import { testDbDelete, testDbList } from '@/api/testDbApi'
-import { dictDataSelect } from '@/api/dict'
+import { genTableDelete, genTableList } from '@/api/genTableApi'
 
 export default {
-  name: 'testDb.testDbs',
+  name: 'genTable.genTables',
   components: {
-    create: () => import('@/views/testDb/create'),
-    update: () => import('@/views/testDb/update'),
-    DictTag: () => import('@/components/DictTag'),
-    ForeignString: () => import('@/components/Foreign/string')
+    create: () => import('@/views/genTable/create'),
+    update: () => import('@/views/genTable/update')
   },
   data() {
     return {
@@ -181,31 +116,25 @@ export default {
         limit: 10,
         order: 'descending',
         sort: 'created_at',
-        admin_id: '',
         name: '',
-        sex: '',
-        number: '',
-        sgood: '',
-        birthday_at_start: '',
-        birthday_at_end: '',
+        comment: '',
+        engine: '',
+        charset: '',
+        collation: '',
         created_at_start: '',
         created_at_end: '',
         updated_at_start: '',
         updated_at_end: ''
-      },
-      dictTypeSelectData: [],
-      dict: []
+      }
     }
   },
   mounted() {
-    this.getDictTypeSelect()
-    this.getDictData()
     this.getList()
   },
   methods: {
     getList() {
       this.loading = true
-      testDbList(this.form).then(response => {
+      genTableList(this.form).then(response => {
         const { data = [], total = 0 } = response.data
         this.data = data
         this.total = total
@@ -251,7 +180,7 @@ export default {
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         })
-        testDbDelete({
+        genTableDelete({
           id: id
         }).then(response => {
           this.$message({
@@ -272,18 +201,6 @@ export default {
     },
     handleEdit({ id }) {
       this.$refs.update.init(id)
-    },
-    getDictTypeSelect() {
-      dictTypeSelect().then(response => {
-        const { select = [] } = response.data
-        this.dictTypeSelectData = select
-      })
-    },
-    getDictData() {
-      dictDataSelect().then(response => {
-        const { select = [] } = response.data
-        this.dict = select
-      })
     }
   }
 }

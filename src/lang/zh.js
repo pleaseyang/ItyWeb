@@ -91,7 +91,11 @@ export default {
     nginx: {
       logs: 'NGINX日志'
     },
-    dict: '字典管理'
+    dict: '字典管理',
+    genTable: {
+      genTables: '代码生成'
+    },
+    WebSocket: 'WebSocket'
   },
   navbar: {
     dashboard: '首页',

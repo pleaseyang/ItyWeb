@@ -374,3 +374,7 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+export function inArray(value, arr) {
+  return arr.filter((e) => e === value).length > 0
+}

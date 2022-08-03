@@ -91,7 +91,11 @@ export default {
     nginx: {
       logs: 'NGINX Logs'
     },
-    dict: 'Dictionary Manage'
+    dict: 'Dictionary Manage',
+    genTable: {
+      genTables: 'Code Generation'
+    },
+    WebSocket: 'WebSocket'
   },
   navbar: {
     dashboard: 'Dashboard',

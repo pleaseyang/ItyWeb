@@ -305,7 +305,7 @@ aside {
   min-height: 400px;
 }
 
-.form-item-required label:before{
+.form-item-required .el-form-item__label:before{
   content: '*';
   color: #F56C6C;
   margin-right: 4px;
