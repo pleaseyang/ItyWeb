@@ -43,6 +43,10 @@ LARAVEL Notifiable Trait 搭建
 ### 系统异常
 ![系统异常](.github/系统异常.png)
 获取异常后记录到DB中
+
+### 代码生成器
+新增代码生成器(测试版)。可进行CURD，加快开发效率。
+![系统异常](.github/代码生成器.png)
  
 ## 搭建
 ### 安装
@@ -60,3 +64,6 @@ LARAVEL Notifiable Trait 搭建
 * [jetbrains](https://www.jetbrains.com) ![](.github/jetbrains.svg)
 * [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 * [tinymce](https://github.com/tinymce)
+
+## 请作者喝咖啡
+![系统异常](.github/wechat.jpg)
