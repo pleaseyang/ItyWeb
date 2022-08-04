@@ -29,8 +29,8 @@
           </el-form-item>
           <el-col>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
-              <el-button @click="resetForm">{{ $t('common.reset') }}</el-button>
+              <el-button :loading="loading" type="primary" @click="onSubmit">{{ $t('common.search') }}</el-button>
+              <el-button :loading="loading" @click="resetForm">{{ $t('common.reset') }}</el-button>
             </el-form-item>
           </el-col>
         </el-form>
@@ -296,7 +296,7 @@ export default {
 </script>
 
 <style scoped>
-/deep/ .el-dialog__body {
+::v-deep .el-dialog__body {
   padding: 0 20px 10px 20px !important;
 }
 .hljs{

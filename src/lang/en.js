@@ -90,7 +90,12 @@ export default {
     },
     nginx: {
       logs: 'NGINX Logs'
-    }
+    },
+    dict: 'Dictionary Manage',
+    genTable: {
+      genTables: 'Code Generation'
+    },
+    WebSocket: 'WebSocket'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -230,7 +235,11 @@ export default {
     seeInfo: 'View details',
     moreScreening: 'More screening',
     collapseScreening: 'Collapse screening',
-    loading: 'Loading'
+    loading: 'Loading',
+    yes: 'Yes',
+    no: 'No',
+    alreadyUpload: 'Already upload',
+    uploadTip: 'Only XLS / xlsx / CSV / PDF / word / txt / mp4 files can be uploaded'
   },
   permission: {
     keywords: 'Enter keywords to filter',
@@ -388,5 +397,65 @@ export default {
     all: 'All',
     yes: 'Yes',
     no: 'No'
+  },
+  dictType: {
+    name: 'Dictionary name',
+    type: 'Dictionary type',
+    status: 'Status',
+    status_1: 'Available',
+    status_0: 'Disable',
+    status_all: 'Whole',
+    remark: 'Remark'
+  },
+  dictData: {
+    title: 'Dict Data',
+    sort: 'Sort',
+    label: 'Label',
+    value: 'Value',
+    list_class: 'Table echo style',
+    default: 'Default',
+    default_1: 'Yes',
+    default_0: 'No',
+    default_all: 'Whole',
+    status: 'Status',
+    status_1: 'Available',
+    status_0: 'Disable',
+    status_all: 'Whole',
+    remark: 'Remark'
+  },
+  genTable: {
+    name: 'Name',
+    comment: 'Comment',
+    engine: 'Engine',
+    charset: 'Charset',
+    collation: 'Collation',
+    created_at_start: 'Created At Start',
+    created_at_end: 'Created At End',
+    updated_at_start: 'Updated At Start',
+    updated_at_end: 'Updated At End',
+    select_table: 'Please select a table to generate',
+    pid: 'Sub-headings',
+    pid_placeholder: 'Leave blank to default to top-level category',
+    confirm_message: 'Please confirm that the form information has been submitted',
+    gen: 'Generate Code',
+    table: {
+      name: 'Name',
+      comment: 'Comment',
+      type: 'Type',
+      _required: 'Required',
+      _insert: 'Insert',
+      _update: 'Update',
+      _list: 'List',
+      _select: 'Select',
+      _query: 'Select Type',
+      _show: 'Show Type',
+      dict_type_id: 'Dict',
+      _unique: 'Unique',
+      _foreign: 'Foreign',
+      _foreign_table: 'Foreign Table',
+      _foreign_column: 'Foreign Column',
+      _foreign_show_column: 'Foreign Column Show',
+      select: 'Please Select'
+    }
   }
 }
