@@ -16,7 +16,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          :placeholder="$t('login.username')"
+          :placeholder="$t('login.username') + '/' + $t('admin.email')"
           name="username"
           type="text"
           tabindex="1"
@@ -118,6 +118,7 @@ export default {
     },
     handleLogin() {
       this.loading = true
+      this.error = {}
       this.$store.dispatch('user/login', this.loginForm)
         .then(() => {
           this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
