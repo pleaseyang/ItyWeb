@@ -41,7 +41,6 @@
 
 <script>
 import ThemePicker from '@/components/ThemePicker'
-import Cookies from 'js-cookie'
 
 export default {
   components: { ThemePicker },
@@ -57,7 +56,8 @@ export default {
         return this.$store.state.settings.fixedHeader
       },
       set(val) {
-        Cookies.set('fixedHeader', val, { expires: 365 })
+        // TODO
+        console.log('接口set')
         this.$store.dispatch('settings/changeSetting', {
           key: 'fixedHeader',
           value: val
@@ -69,7 +69,8 @@ export default {
         return this.$store.state.settings.tagsView
       },
       set(val) {
-        Cookies.set('tagsView', val, { expires: 365 })
+        // TODO
+        console.log('接口set')
         this.$store.dispatch('settings/changeSetting', {
           key: 'tagsView',
           value: val
@@ -81,7 +82,8 @@ export default {
         return this.$store.state.settings.sidebarLogo
       },
       set(val) {
-        Cookies.set('sidebarLogo', val, { expires: 365 })
+        // TODO
+        console.log('接口set')
         this.$store.dispatch('settings/changeSetting', {
           key: 'sidebarLogo',
           value: val
@@ -93,7 +95,8 @@ export default {
         return this.$store.state.settings.supportPinyinSearch
       },
       set(val) {
-        Cookies.set('supportPinyinSearch', val, { expires: 365 })
+        // TODO
+        console.log('接口set')
         this.$store.dispatch('settings/changeSetting', {
           key: 'supportPinyinSearch',
           value: val
@@ -106,6 +109,8 @@ export default {
   },
   methods: {
     themeChange(val) {
+      // TODO
+      console.log('接口set')
       this.$store.dispatch('settings/changeSetting', {
         key: 'theme',
         value: val

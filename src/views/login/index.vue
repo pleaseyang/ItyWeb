@@ -3,9 +3,10 @@
     <el-form ref="loginForm" :model="loginForm" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">
-          {{ $t('login.title') }}
-        </h3>
+        <div class="logo">
+          <el-avatar :src="logo" size="large" class="logo-image" />
+          <label class="title">{{ title }}</label>
+        </div>
         <lang-select class="set-language" />
       </div>
 
@@ -73,7 +74,9 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      error: {}
+      error: {},
+      title: 'Loading...',
+      logo: ''
     }
   },
   watch: {
@@ -97,11 +100,23 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.getSetting()
   },
   destroyed() {
 
   },
   methods: {
+    getSetting() {
+      this.loading = true
+      document.title = this.title
+      this.$store.dispatch('user/setting').then(res => {
+        this.title = res.title
+        this.logo = res.logo
+        document.title = this.title
+      }).finally(() => {
+        this.loading = false
+      })
+    },
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
@@ -236,12 +251,25 @@ $light_gray:#eee;
   .title-container {
     position: relative;
 
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
+    .logo{
+      height: 50px;
+      position: relative;
+      margin-bottom: 25px;
+      .logo-image{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 100%;
+        margin: auto;
+      }
+      .title{
+        line-height: 50px;
+        margin-left: 50px;
+        font-size: 26px;
+        color: $light_gray;
+        font-weight: bold;
+      }
     }
 
     .set-language {

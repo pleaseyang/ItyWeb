@@ -1,13 +1,24 @@
-import defaultSettings from '@/settings'
 import i18n from '@/lang'
-
-const title = defaultSettings.title || 'Vue Element Admin'
+import store from '@/store'
 
 export default async function getPageTitle(key) {
-  const hasKey = i18n.te(`route.${key}`)
-  if (hasKey) {
-    const pageName = i18n.t(`route.${key}`)
-    return `${pageName} - ${title}`
+  const { title = '' } = store.state.user.systemSetting
+  if (title === '') {
+    const { title2 } = await store.dispatch('user/setting')
+    return returnTitle(key, title2)
+  } else {
+    return returnTitle(key, title)
   }
-  return `${title}`
+}
+
+function returnTitle(key, title) {
+  if (key !== undefined && title !== undefined) {
+    const hasKey = i18n.te(`route.${key}`)
+    if (hasKey) {
+      const pageName = i18n.t(`route.${key}`)
+      return `${pageName} - ${title}`
+    }
+    return `${title}`
+  }
+  return 'Loading...'
 }

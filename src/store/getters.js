@@ -14,6 +14,7 @@ const getters = {
   permission_routes: state => state.permission.routes,
   errorLogs: state => state.errorLog.logs,
   unreadNotificationCount: state => state.user.unreadNotificationCount,
+  systemSetting: state => state.user.systemSetting,
   theme: state => state.settings.theme
 }
 export default getters
