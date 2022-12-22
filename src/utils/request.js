@@ -68,8 +68,8 @@ service.interceptors.response.use(
         if (!isRefreshing) {
           isRefreshing = true
           return refreshToken().then(res => {
-            const { access_token } = res
-            setToken(access_token)
+            const { access_token, expires_in } = res
+            setToken(access_token, expires_in)
             config.headers['Authorization'] = 'Bearer ' + access_token
             config.baseURL = ''
             requests.forEach(cb => cb(access_token))
