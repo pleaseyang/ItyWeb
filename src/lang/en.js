@@ -95,7 +95,8 @@ export default {
     genTable: {
       genTables: 'Code Generation'
     },
-    WebSocket: 'WebSocket'
+    WebSocket: 'WebSocket',
+    systemConfig: 'System Config'
   },
   navbar: {
     dashboard: 'Dashboard',
@@ -239,7 +240,15 @@ export default {
     yes: 'Yes',
     no: 'No',
     alreadyUpload: 'Already upload',
-    uploadTip: 'Only XLS / xlsx / CSV / PDF / word / txt / mp4 files can be uploaded'
+    uploadTip: 'Only XLS / xlsx / CSV / PDF / word / txt / mp4 files can be uploaded',
+    upload: 'Upload',
+    uploadLogTip: 'Only images in png can be uploaded',
+    change: 'Change'
+  },
+  system: {
+    config: 'System Config',
+    title: 'Title',
+    logo: 'LOGO'
   },
   permission: {
     keywords: 'Enter keywords to filter',

@@ -95,7 +95,8 @@ export default {
     genTable: {
       genTables: '代码生成'
     },
-    WebSocket: 'WebSocket'
+    WebSocket: 'WebSocket',
+    systemConfig: '系统配置'
   },
   navbar: {
     dashboard: '首页',
@@ -239,7 +240,15 @@ export default {
     yes: '是',
     no: '否',
     alreadyUpload: '文件已上传',
-    uploadTip: '只能上传 xls/xlsx/csv/pdf/word/txt/mp4 文件'
+    uploadTip: '只能上传 xls/xlsx/csv/pdf/word/txt/mp4 文件',
+    upload: '上传',
+    uploadLogTip: '只能上传 png 的图片',
+    change: '更换'
+  },
+  system: {
+    config: '系统配置',
+    title: '标题',
+    logo: 'LOGO'
   },
   permission: {
     keywords: '输入关键字进行过滤',
