@@ -32,6 +32,11 @@
               </el-form-item>
             </el-form>
           </el-tab-pane>
+          <el-tab-pane label="钉钉登录" />
+          <el-tab-pane label="微信登录" />
+          <el-tab-pane label="阿里云OSS" />
+          <el-tab-pane label="微信支付" />
+          <el-tab-pane label="邮件配置" />
         </el-tabs>
       </el-col>
     </el-row>
@@ -43,7 +48,7 @@ import { setting } from '@/api/user'
 import { logoUpload } from '@/api/system'
 
 export default {
-  name: 'systemConfig-TODO',
+  name: 'systemConfig',
   data() {
     return {
       form: {
