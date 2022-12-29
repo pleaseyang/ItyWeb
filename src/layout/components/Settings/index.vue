@@ -41,6 +41,7 @@
 
 <script>
 import ThemePicker from '@/components/ThemePicker'
+import { setting } from '@/api/admin'
 
 export default {
   components: { ThemePicker },
@@ -56,8 +57,10 @@ export default {
         return this.$store.state.settings.fixedHeader
       },
       set(val) {
-        // TODO
-        console.log('接口set')
+        setting({
+          key: 'fixed_header',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'fixedHeader',
           value: val
@@ -69,8 +72,10 @@ export default {
         return this.$store.state.settings.tagsView
       },
       set(val) {
-        // TODO
-        console.log('接口set')
+        setting({
+          key: 'tags_view',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'tagsView',
           value: val
@@ -82,8 +87,10 @@ export default {
         return this.$store.state.settings.sidebarLogo
       },
       set(val) {
-        // TODO
-        console.log('接口set')
+        setting({
+          key: 'sidebar_logo',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'sidebarLogo',
           value: val
@@ -95,8 +102,10 @@ export default {
         return this.$store.state.settings.supportPinyinSearch
       },
       set(val) {
-        // TODO
-        console.log('接口set')
+        setting({
+          key: 'support_pinyin_search',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'supportPinyinSearch',
           value: val
@@ -109,8 +118,10 @@ export default {
   },
   methods: {
     themeChange(val) {
-      // TODO
-      console.log('接口set')
+      setting({
+        key: 'theme',
+        value: val
+      })
       this.$store.dispatch('settings/changeSetting', {
         key: 'theme',
         value: val
