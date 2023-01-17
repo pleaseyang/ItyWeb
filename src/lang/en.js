@@ -308,7 +308,7 @@ export default {
         help1: 'WeChat payment common merchant and AppID account association management',
         help2: 'Generally, it is the request domain name of the background. If it is a local development environment, please build an intranet penetration.',
         help3: 'Note: Do not carry the last',
-        help4: 'This payment is a test payment, with 1 cent actually paid. It will be returned after payment. Observe the back-end console output',
+        help4: 'This payment is a test payment, with 1 cent actually paid. It will be returned after payment. Observe the back-end log',
         code: 'Please scan the code to pay'
       }
     }
