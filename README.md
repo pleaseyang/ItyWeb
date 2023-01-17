@@ -56,9 +56,8 @@ LARAVEL Notifiable Trait 搭建
 ### 部署
 1. `npm run build:prod`
 
-### 报错
-1. 关于 e-icon-picker 报错
- `复制 lib/e-icon-picker 到 node_modules`
+### 备注
+1. 后端无system接口请使用`no-config`分支
 
 ## 致谢
 * [jetbrains](https://www.jetbrains.com) ![](.github/jetbrains.svg)
