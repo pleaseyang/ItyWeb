@@ -248,7 +248,70 @@ export default {
   system: {
     config: 'System Config',
     title: 'Title',
-    logo: 'LOGO'
+    logo: 'LOGO',
+    dingTalkLogin: 'DingTalk Login',
+    wechatLogin: 'WeChat Login',
+    aliOssTitle: 'Ali OSS',
+    wechatPayTitle: 'WeChat Pay',
+    dingtalk: {
+      open: 'DingTalk Login',
+      need_permissions: 'Permissions to be opened',
+      client_id: 'AppKey',
+      client_secret: 'AppSecret',
+      corp_id: 'corpId',
+      redirect_uri: 'Callback URL',
+      redirect_bind_uri: 'Bind Callback URL'
+    },
+    wechat: {
+      open: 'WeChat Login',
+      oplatform: '微信开放平台 (WeChat open platform)',
+      oplatform_appid: 'Appid',
+      oplatform_appsecret: 'Appsecret',
+      oplatform_redirect_uri: 'Callback URL',
+      offiaccount: '微信公众平台 (WeChat public platform)',
+      offiaccount_appid: 'Appid',
+      offiaccount_appsecret: 'Appsecret',
+      offiaccount_redirect_uri: 'Callback URL'
+    },
+    aliOss: {
+      need_permissions: 'Permissions to be opened',
+      endpoint: 'Endpoint (Regional node)',
+      access_key_id: 'AccessKeyId (Identify users)',
+      access_key_secret: 'AccessKeySecret (Verify user\'s key)',
+      bucket_name: 'BucketName (Storage space name)'
+    },
+    wechatPay: {
+      setApiV3Key: 'What is the API v3 key? How to set?',
+      helpApiV3Key: 'The system will not save your key in clear text. Please save it yourself.',
+      setZip: 'What is the merchant API certificate? How to obtain merchant API certificate?',
+      helpZip1: 'Please upload ZIP compressed package. (Download the compressed package according to the instructions)',
+      helpZip2: 'Your key file system will not be saved in clear text. Please upload it safely. If you need to change it, please upload the compressed package again and fill in the APIv3 key again.',
+      merchant_id: 'Merchant No',
+      merchant_name: 'Merchant name',
+      api_v3_key: 'APIv3 Key',
+      zip: 'Merchant certificate compression package',
+      randomKey: 'Random generation',
+      check: {
+        title: 'Certificate information',
+        merchantId: 'Merchant No',
+        merchantName: 'Merchant name',
+        version: 'Certificate version',
+        serialNumber: 'Certificate serial number',
+        notAfter: 'Start of validity period',
+        notBefore: 'End of validity',
+        close: 'close'
+      },
+      test: {
+        title: 'WeChat payment test',
+        appid: 'APPID',
+        notify_url: 'Callback Url',
+        help1: 'WeChat payment common merchant and AppID account association management',
+        help2: 'Generally, it is the request domain name of the background. If it is a local development environment, please build an intranet penetration.',
+        help3: 'Note: Do not carry the last',
+        help4: 'This payment is a test payment, with 1 cent actually paid. It will be returned after payment. Observe the back-end console output',
+        code: 'Please scan the code to pay'
+      }
+    }
   },
   permission: {
     keywords: 'Enter keywords to filter',

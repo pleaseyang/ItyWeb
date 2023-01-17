@@ -248,7 +248,70 @@ export default {
   system: {
     config: '系统配置',
     title: '标题',
-    logo: 'LOGO'
+    logo: 'LOGO',
+    dingTalkLogin: '钉钉登录',
+    wechatLogin: '微信登录',
+    aliOssTitle: '阿里云OSS',
+    wechatPayTitle: '微信支付',
+    dingtalk: {
+      open: '钉钉登录',
+      need_permissions: '需要开通的权限',
+      client_id: 'AppKey',
+      client_secret: 'AppSecret',
+      corp_id: 'corpId',
+      redirect_uri: '回调URL',
+      redirect_bind_uri: '绑定回调URL'
+    },
+    wechat: {
+      open: '微信登录',
+      oplatform: '微信开放平台',
+      oplatform_appid: 'Appid',
+      oplatform_appsecret: 'Appsecret',
+      oplatform_redirect_uri: '回调地址',
+      offiaccount: '微信公众平台',
+      offiaccount_appid: 'Appid',
+      offiaccount_appsecret: 'Appsecret',
+      offiaccount_redirect_uri: '回调地址'
+    },
+    aliOss: {
+      need_permissions: '需要开通的权限',
+      endpoint: 'Endpoint（地域节点）',
+      access_key_id: 'AccessKeyId (标识用户)',
+      access_key_secret: 'AccessKeySecret (验证用户的密钥)',
+      bucket_name: 'BucketName (存储空间名称)'
+    },
+    wechatPay: {
+      setApiV3Key: '什么是APIv3密钥？如何设置？',
+      helpApiV3Key: '系统不会明文保存您的密钥，请自行保存。',
+      setZip: '什么是商户API证书？如何获取商户API证书？',
+      helpZip1: '请上传ZIP格式的压缩包。（按照指引下载后的压缩包）',
+      helpZip2: '您的密钥文件系统不会明文保存，请放心上传。如需更改请重新上传压缩包，重新填写APIv3密钥。',
+      merchant_id: '商户号',
+      merchant_name: '商户名称',
+      api_v3_key: 'APIv3密钥',
+      zip: '商户证书压缩包',
+      randomKey: '随机生成',
+      check: {
+        title: '证书信息',
+        merchantId: '商户号',
+        merchantName: '商户名称',
+        version: '证书版本',
+        serialNumber: '证书序列号',
+        notAfter: '有效期起始',
+        notBefore: '有效期结束',
+        close: '关闭'
+      },
+      test: {
+        title: '微信支付测试',
+        appid: 'APPID',
+        notify_url: '回调地址',
+        help1: '微信支付普通商户与AppID账号关联管理',
+        help2: '一般为后台的请求域名。 如果是本地开发环境，请搭建内网穿透。',
+        help3: '注意：不要携带最后的',
+        help4: '本次支付为测试支付，实付1分钱。付款后会退回。注意观察后端控制台输出',
+        code: '请扫码支付'
+      }
+    }
   },
   permission: {
     keywords: '输入关键字进行过滤',

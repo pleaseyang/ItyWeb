@@ -4,7 +4,7 @@
       <el-col :span="24">
         <el-tabs type="border-card">
           <el-tab-pane :label="$t('system.config')">
-            <el-form ref="form" :model="form" label-width="auto">
+            <el-form ref="form" :model="form" label-width="auto" label-position="top">
               <el-form-item :label="$t('system.title')" prop="title">
                 <el-input v-model="form.title" disabled />
               </el-form-item>
@@ -32,11 +32,18 @@
               </el-form-item>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="钉钉登录" />
-          <el-tab-pane label="微信登录" />
-          <el-tab-pane label="阿里云OSS" />
-          <el-tab-pane label="微信支付" />
-          <el-tab-pane label="邮件配置" />
+          <el-tab-pane :label="$t('system.dingTalkLogin')">
+            <ding-talk-login ref="dingTalkLogin" />
+          </el-tab-pane>
+          <el-tab-pane :label="$t('system.wechatLogin')">
+            <wechat-login ref="wechatLogin" />
+          </el-tab-pane>
+          <el-tab-pane :label="$t('system.aliOssTitle')">
+            <ali-oss ref="aliOss" />
+          </el-tab-pane>
+          <el-tab-pane :label="$t('system.wechatPayTitle')">
+            <wechat-pay ref="wechatPay" />
+          </el-tab-pane>
         </el-tabs>
       </el-col>
     </el-row>
@@ -49,6 +56,12 @@ import { logoUpload } from '@/api/system'
 
 export default {
   name: 'systemConfig',
+  components: {
+    dingTalkLogin: () => import('@/views/system/dingTalkLogin'),
+    wechatLogin: () => import('@/views/system/wechatLogin'),
+    aliOss: () => import('@/views/system/aliOss'),
+    wechatPay: () => import('@/views/system/wechatPay')
+  },
   data() {
     return {
       form: {
