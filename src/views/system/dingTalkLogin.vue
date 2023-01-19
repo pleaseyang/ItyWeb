@@ -24,7 +24,7 @@
       <el-input v-model="form.redirect_uri" clearable maxlength="200" show-word-limit class="margin-t-5" />
     </el-form-item>
     <el-form-item :label="$t('system.dingtalk.redirect_bind_uri')" prop="redirect_bind_uri" class="form-item-required" :error="error.redirect_bind_uri ? error.redirect_bind_uri[0] : ''">
-      <el-alert title="https://domain.com/#/userinfo  钉钉管理后台 -> 工作台 -> 应用管理 -> 应用 -> 应用功能 -> 登录与分享 请填写此项 (domain.com替换为正式地址)" type="warning" :closable="false" />
+      <el-alert title="https://domain.com/#/profile/index  钉钉管理后台 -> 工作台 -> 应用管理 -> 应用 -> 应用功能 -> 登录与分享 请填写此项 (domain.com替换为正式地址)" type="warning" :closable="false" />
       <el-input v-model="form.redirect_bind_uri" clearable maxlength="200" show-word-limit class="margin-t-5" />
     </el-form-item>
     <el-form-item>

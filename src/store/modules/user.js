@@ -67,6 +67,15 @@ const actions = {
     })
   },
 
+  loginByCode({ commit }, response) {
+    return new Promise((resolve, reject) => {
+      const { data } = response
+      commit('SET_TOKEN', data.access_token)
+      setToken(data.access_token, data.expires_in)
+      resolve()
+    })
+  },
+
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {

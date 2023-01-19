@@ -52,12 +52,21 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
+      <div class="text-center">
+        <el-divider content-position="center">其他登录方式</el-divider>
+        <el-button type="primary" circle @click="dingTalkLogin">
+          <svg-icon icon-class="dingtalk" style="font-size: 18px" />
+        </el-button>
+      </div>
     </el-form>
   </div>
 </template>
 
 <script>
+import * as dd from 'dingtalk-jsapi'
 import LangSelect from '@/components/LangSelect'
+import { dingTalk, dingTalkCheckState, dingTalkCorpId, dingTalkDD, dingTalkUrl } from '@/api/user'
+import { getQueryObject } from '@/utils'
 
 export default {
   name: 'Login',
@@ -92,7 +101,7 @@ export default {
     }
   },
   created() {
-
+    this.dingTalkLoginCallBack()
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -156,6 +165,70 @@ export default {
         }
         return acc
       }, {})
+    },
+    dingTalkLogin() {
+      if (dd.env.platform === 'notInDingTalk') {
+        dingTalkUrl().then(response => {
+          const { url } = response.data
+          window.location.href = url
+        })
+      } else {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        dingTalkCorpId().then(response => {
+          const { corpId } = response.data
+          dd.runtime.permission.requestAuthCode({
+            corpId: corpId
+          }).then(res => {
+            dingTalkDD({
+              code: res.code,
+              state: 'state'
+            }).then(response => {
+              this.$store.dispatch('user/loginByCode', response)
+                .then(() => {
+                  this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                  this.loading = false
+                })
+            }).finally(() => {
+              loading.close()
+            })
+          })
+        })
+      }
+    },
+    dingTalkLoginCallBack() {
+      const query = getQueryObject(window.location.href)
+      if (Object.prototype.hasOwnProperty.call(query, 'authCode')) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        dingTalkCheckState({
+          state: query.state.replace('#/login', '')
+        }).then(response => {
+          const { check } = response.data
+          if (check) {
+            dingTalk({
+              state: query.state.replace('#/login', ''),
+              code: query.authCode
+            }).then(response => {
+              this.$store.dispatch('user/loginByCode', response)
+                .then(() => {
+                  this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                  this.loading = false
+                })
+            }).finally(() => {
+              loading.close()
+            })
+          } else {
+            loading.close()
+          }
+        })
+      }
     }
   }
 }
@@ -301,6 +374,14 @@ $light_gray:#eee;
   @media only screen and (max-width: 470px) {
     .thirdparty-button {
       display: none;
+    }
+  }
+
+  .el-divider{
+    background-color: $light_gray;
+    .el-divider__text{
+      background-color: $bg;
+      color: $light_gray;
     }
   }
 }

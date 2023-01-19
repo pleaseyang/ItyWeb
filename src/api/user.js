@@ -77,3 +77,43 @@ export function update(data) {
     data
   })
 }
+
+export function dingTalkUrl(data) {
+  return request({
+    url: '/login/dingTalkUrl',
+    method: 'post',
+    data
+  })
+}
+
+export function dingTalkCheckState(data) {
+  return request({
+    url: '/login/dingTalkCheckState',
+    method: 'post',
+    data
+  })
+}
+
+export function dingTalk(data) {
+  return request({
+    url: '/login/dingTalk',
+    method: 'post',
+    data
+  })
+}
+
+export function dingTalkCorpId(data) {
+  return request({
+    url: '/login/dingTalkCorpId',
+    method: 'post',
+    data
+  })
+}
+
+export function dingTalkDD(data) {
+  return request({
+    url: '/login/dingTalkDD',
+    method: 'post',
+    data
+  })
+}
