@@ -253,6 +253,12 @@ export default {
     wechatLogin: '微信登录',
     aliOssTitle: '阿里云OSS',
     wechatPayTitle: '微信支付',
+    user: {
+      bindingInfo: '绑定信息',
+      detail: '详情',
+      bindingTime: '绑定时间',
+      syncTime: '同步时间'
+    },
     dingtalk: {
       open: '钉钉登录',
       need_permissions: '需要开通的权限',
@@ -260,7 +266,10 @@ export default {
       client_secret: 'AppSecret',
       corp_id: 'corpId',
       redirect_uri: '回调URL',
-      redirect_bind_uri: '绑定回调URL'
+      redirect_bind_uri: '绑定回调URL',
+      bind: '绑定钉钉',
+      unbind: '解绑钉钉',
+      name: '钉钉'
     },
     wechat: {
       open: '微信登录',

@@ -273,6 +273,12 @@ export default {
       offiaccount_appsecret: 'Appsecret',
       offiaccount_redirect_uri: 'Callback URL'
     },
+    user: {
+      bindingInfo: 'Binding information',
+      detail: 'Details',
+      bindingTime: 'Binding time',
+      syncTime: 'Synchronization time'
+    },
     aliOss: {
       need_permissions: 'Permissions to be opened',
       endpoint: 'Endpoint (Regional node)',

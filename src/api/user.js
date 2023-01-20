@@ -117,3 +117,35 @@ export function dingTalkDD(data) {
     data
   })
 }
+
+export function dingTalkInfo(data) {
+  return request({
+    url: '/bind/dingTalkInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function bindDingTalkUrl(data) {
+  return request({
+    url: '/bind/dingTalkUrl',
+    method: 'post',
+    data
+  })
+}
+
+export function bindDingTalk(data) {
+  return request({
+    url: '/bind/dingTalk',
+    method: 'post',
+    data
+  })
+}
+
+export function unbindDingTalk(data) {
+  return request({
+    url: '/unbind/dingTalk',
+    method: 'post',
+    data
+  })
+}
