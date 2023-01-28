@@ -81,6 +81,48 @@
                 </div>
               </td>
             </tr>
+            <tr class="el-table__row">
+              <td class="el-table_1_column_1 el-table__cell" rowspan="1" colspan="1">
+                <div class="cell">{{ $t('system.wechat.name') }}</div>
+              </td>
+              <td class="el-table_1_column_2 el-table__cell" rowspan="1" colspan="1">
+                <div v-if="wechat !== null" class="cell">
+                  <div class="userinfo">
+                    <el-avatar class="avatar" size="small" :src="wechat.headimgurl" />
+                    <span class="name">{{ wechat.nickname }}</span>
+                  </div>
+                </div>
+                <div v-else class="cell">-</div>
+              </td>
+              <td class="el-table_1_column_3 el-table__cell" rowspan="1" colspan="1">
+                <div v-if="wechat !== null" class="cell">
+                  {{ wechat.created_at }}
+                </div>
+                <div v-else class="cell">-</div>
+              </td>
+              <td class="el-table_1_column_4 el-table__cell" rowspan="1" colspan="1">
+                <div v-if="wechat !== null" class="cell">
+                  {{ wechat.updated_at }}
+                </div>
+                <div v-else class="cell">-</div>
+              </td>
+              <td class="el-table_1_column_5 el-table__cell" rowspan="1" colspan="1">
+                <div class="cell">
+                  <div v-if="wechat !== null" class="cell">
+                    <el-button type="default" @click="unbindWechat">
+                      <svg-icon icon-class="wechat" />
+                      {{ $t('system.wechat.unbind') }}
+                    </el-button>
+                  </div>
+                  <div v-else class="cell">
+                    <el-button type="default" @click="wechatBind">
+                      <svg-icon icon-class="wechat" />
+                      {{ $t('system.wechat.bind') }}
+                    </el-button>
+                  </div>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </el-form-item>
@@ -89,14 +131,27 @@
       </el-form-item>
     </el-form>
     <nav-setting />
+    <el-dialog
+      :visible.sync="visible"
+    >
+      <div id="login_container" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { updateSelf } from '@/api/admin'
-import { bindDingTalk, bindDingTalkUrl, dingTalkCheckState, dingTalkInfo, getInfo, unbindDingTalk } from '@/api/user'
+import {
+  bindDingTalk,
+  bindDingTalkUrl, bindWechat, bindWechatUrl,
+  dingTalkCheckState,
+  dingTalkInfo,
+  getInfo,
+  unbindDingTalk, unbindWechat, wechatCheckState,
+  wechatInfo
+} from '@/api/user'
 import store from '@/store'
-import { getQueryObject } from '@/utils'
+import { getQueryObject, loadJS } from '@/utils'
 export default {
   name: 'Profile',
   components: {
@@ -114,7 +169,17 @@ export default {
         time: ''
       },
       error: {},
-      dingTalk: null
+      dingTalk: null,
+      wechat: null,
+      visible: false
+    }
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        this.wechatBindCallBack(route.query)
+      },
+      immediate: true
     }
   },
   created() {
@@ -130,6 +195,7 @@ export default {
         this.updateForm.name = data.name
         this.updateForm.email = data.email
         this.getDingTalkInfo()
+        this.getWechatInfo()
       })
     },
     onUpdate(formName) {
@@ -156,9 +222,35 @@ export default {
         window.location.href = response.data.url
       })
     },
+    wechatBind() {
+      bindWechatUrl().then(response => {
+        loadJS('//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js', 'WxLogin').then(() => {
+          this.visible = true
+          this.$nextTick(() => {
+            const { data } = response
+            // eslint-disable-next-line no-undef
+            new WxLogin({
+              self_redirect: false,
+              id: 'login_container',
+              appid: data.appid,
+              scope: 'snsapi_login',
+              redirect_uri: data.redirect_uri,
+              state: data.state,
+              style: '',
+              href: ''
+            })
+          })
+        })
+      })
+    },
     getDingTalkInfo() {
       dingTalkInfo().then(response => {
         this.dingTalk = response.data
+      })
+    },
+    getWechatInfo() {
+      wechatInfo().then(response => {
+        this.wechat = response.data
       })
     },
     dingTalkBindCallBack() {
@@ -192,6 +284,38 @@ export default {
         })
       }
     },
+    wechatBindCallBack(query) {
+      if (Object.prototype.hasOwnProperty.call(query, 'code')) {
+        this.visible = false
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        wechatCheckState({
+          state: query.state.replace('#/profile/index', '')
+        }).then(response => {
+          const { check } = response.data
+          if (check) {
+            bindWechat({
+              state: query.state.replace('#/profile/index', ''),
+              code: query.code,
+              type: 'oplatform'
+            }).then(response => {
+              this.$message({
+                message: response.message,
+                type: 'success'
+              })
+              this.getWechatInfo()
+            }).finally(() => {
+              loading.close()
+            })
+          } else {
+            loading.close()
+          }
+        })
+      }
+    },
     unbindDingTalk() {
       unbindDingTalk().then(response => {
         this.$message({
@@ -199,6 +323,15 @@ export default {
           type: 'success'
         })
         this.getDingTalkInfo()
+      })
+    },
+    unbindWechat() {
+      unbindWechat().then(response => {
+        this.$message({
+          message: response.message,
+          type: 'success'
+        })
+        this.getWechatInfo()
       })
     }
   }
@@ -213,5 +346,9 @@ export default {
   position: absolute;
   left: 45px;
   top: 17px;
+}
+
+#login_container {
+  text-align: center;
 }
 </style>

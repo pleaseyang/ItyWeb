@@ -280,7 +280,10 @@ export default {
       offiaccount: '微信公众平台',
       offiaccount_appid: 'Appid',
       offiaccount_appsecret: 'Appsecret',
-      offiaccount_redirect_uri: '回调地址'
+      offiaccount_redirect_uri: '回调地址',
+      bind: '绑定微信',
+      unbind: '解绑微信',
+      name: '微信'
     },
     aliOss: {
       need_permissions: '需要开通的权限',

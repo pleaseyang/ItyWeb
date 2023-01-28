@@ -378,3 +378,38 @@ export function removeClass(ele, cls) {
 export function inArray(value, arr) {
   return arr.filter((e) => e === value).length > 0
 }
+
+/**
+ * loadJS 异步加载远程JS
+ * @constructor
+ * @param {string} src - 必填，需要加载的URL路径
+ * @param {string} keyName - 必填，唯一key和JS返回的全局的对象名
+ * @param {string} callbackName - 非必填，如果远程JS有callback，则可更有效的判断是否完成加载
+ */
+export function loadJS(src, keyName, callbackName) {
+  return new Promise((resolve, reject) => {
+    const has = document.head.querySelector('script[loadKey=' + keyName + ']')
+    if (has) {
+      return resolve(window[keyName])
+    }
+    const script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = src
+    script.setAttribute('loadKey', keyName)
+    document.head.appendChild(script)
+    script.onload = () => {
+      if (callbackName) {
+        window[callbackName] = () => {
+          return resolve(window[keyName])
+        }
+      } else {
+        setTimeout(() => {
+          return resolve(window[keyName])
+        }, 50)
+      }
+    }
+    script.onerror = (err) => {
+      return reject(err)
+    }
+  })
+}

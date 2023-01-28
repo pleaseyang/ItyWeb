@@ -52,21 +52,37 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
-      <div class="text-center">
-        <el-divider content-position="center">其他登录方式</el-divider>
+      <div class="login-oauth">
+        <el-divider content-position="center">{{ $t('login.thirdparty') }}</el-divider>
         <el-button type="primary" circle @click="dingTalkLogin">
           <svg-icon icon-class="dingtalk" style="font-size: 18px" />
         </el-button>
+        <el-button type="success" circle @click="wechatLogin">
+          <svg-icon icon-class="wechat" style="font-size: 18px" />
+        </el-button>
       </div>
     </el-form>
+    <el-dialog
+      :visible.sync="visible"
+    >
+      <div id="login_container" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import * as dd from 'dingtalk-jsapi'
 import LangSelect from '@/components/LangSelect'
-import { dingTalk, dingTalkCheckState, dingTalkCorpId, dingTalkDD, dingTalkUrl } from '@/api/user'
-import { getQueryObject } from '@/utils'
+import {
+  dingTalk,
+  dingTalkCheckState,
+  dingTalkCorpId,
+  dingTalkDD,
+  dingTalkUrl, wechat, wechatCheckState,
+  wechatUrl,
+  wechatUrlOffiaccount
+} from '@/api/user'
+import { getQueryObject, loadJS } from '@/utils'
 
 export default {
   name: 'Login',
@@ -85,7 +101,8 @@ export default {
       otherQuery: {},
       error: {},
       title: 'Loading...',
-      logo: ''
+      logo: '',
+      visible: false
     }
   },
   watch: {
@@ -95,6 +112,7 @@ export default {
         if (query) {
           this.redirect = query.redirect
           this.otherQuery = this.getOtherQuery(query)
+          this.wechatLoginCallBack()
         }
       },
       immediate: true
@@ -165,6 +183,84 @@ export default {
         }
         return acc
       }, {})
+    },
+    wechatLogin() {
+      const ua = navigator.userAgent.toLowerCase()
+      const is = /micromessenger/.test(ua)
+      if (!is) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        wechatUrl().then(response => {
+          loadJS('//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js', 'WxLogin').then(() => {
+            this.visible = true
+            this.$nextTick(() => {
+              const { data } = response
+              // eslint-disable-next-line no-undef
+              new WxLogin({
+                self_redirect: false,
+                id: 'login_container',
+                appid: data.appid,
+                scope: 'snsapi_login',
+                redirect_uri: data.redirect_uri,
+                state: data.state,
+                style: '',
+                href: ''
+              })
+            })
+          })
+        }).finally(() => {
+          loading.close()
+        })
+      } else {
+        wechatUrlOffiaccount().then(response => {
+          const { url } = response.data
+          window.location.href = url
+        })
+      }
+    },
+    wechatLoginCallBack() {
+      const query = getQueryObject(window.location.href)
+      this.visible = false
+      if (Object.prototype.hasOwnProperty.call(query, 'code')) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        wechatCheckState({
+          state: query.state.replace('#/login', '')
+        }).then(response => {
+          const { check } = response.data
+          if (check) {
+            let type = ''
+            const ua = navigator.userAgent.toLowerCase()
+            const is = /micromessenger/.test(ua)
+            if (!is) {
+              type = 'oplatform'
+            } else {
+              type = 'offiaccount'
+            }
+            wechat({
+              state: query.state.replace('#/login', ''),
+              code: query.code,
+              type: type
+            }).then(response => {
+              this.$store.dispatch('user/loginByCode', response)
+                .then(() => {
+                  this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                  this.loading = false
+                })
+            }).finally(() => {
+              loading.close()
+            })
+          } else {
+            loading.close()
+          }
+        })
+      }
     },
     dingTalkLogin() {
       if (dd.env.platform === 'notInDingTalk') {
@@ -299,6 +395,11 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+
+    .login-oauth {
+      text-align: center;
+      justify-content: space-around;
+    }
   }
 
   .tips {
@@ -384,5 +485,9 @@ $light_gray:#eee;
       color: $light_gray;
     }
   }
+}
+
+#login_container {
+  text-align: center;
 }
 </style>

@@ -260,7 +260,10 @@ export default {
       client_secret: 'AppSecret',
       corp_id: 'corpId',
       redirect_uri: 'Callback URL',
-      redirect_bind_uri: 'Bind Callback URL'
+      redirect_bind_uri: 'Bind Callback URL',
+      bind: 'Bind DingTalk',
+      unbind: 'UnBind DingTalk',
+      name: 'DingTalk'
     },
     wechat: {
       open: 'WeChat Login',
@@ -271,7 +274,10 @@ export default {
       offiaccount: '微信公众平台 (WeChat public platform)',
       offiaccount_appid: 'Appid',
       offiaccount_appsecret: 'Appsecret',
-      offiaccount_redirect_uri: 'Callback URL'
+      offiaccount_redirect_uri: 'Callback URL',
+      bind: 'Bind WeChat',
+      unbind: 'UnBind WeChat',
+      name: 'WeChat'
     },
     user: {
       bindingInfo: 'Binding information',

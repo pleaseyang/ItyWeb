@@ -149,3 +149,67 @@ export function unbindDingTalk(data) {
     data
   })
 }
+
+export function wechatUrl(data) {
+  return request({
+    url: '/login/wechatUrl',
+    method: 'post',
+    data
+  })
+}
+
+export function wechatUrlOffiaccount(data) {
+  return request({
+    url: '/login/wechatUrlOffiaccount',
+    method: 'post',
+    data
+  })
+}
+
+export function wechatCheckState(data) {
+  return request({
+    url: '/login/wechatCheckState',
+    method: 'post',
+    data
+  })
+}
+
+export function wechat(data) {
+  return request({
+    url: '/login/wechat',
+    method: 'post',
+    data
+  })
+}
+
+export function wechatInfo(data) {
+  return request({
+    url: '/bind/wechatInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function bindWechatUrl(data) {
+  return request({
+    url: '/bind/wechatUrl',
+    method: 'post',
+    data
+  })
+}
+
+export function bindWechat(data) {
+  return request({
+    url: '/bind/wechat',
+    method: 'post',
+    data
+  })
+}
+
+export function unbindWechat(data) {
+  return request({
+    url: '/unbind/wechat',
+    method: 'post',
+    data
+  })
+}
