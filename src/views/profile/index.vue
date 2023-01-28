@@ -10,7 +10,7 @@
       <el-form-item :label="$t('admin.password')" prop="password" :error="error.password ? error.password[0] : ''">
         <el-input v-model="updateForm.password" show-password :placeholder="$t('admin.emptyPasswordText')" />
       </el-form-item>
-      <el-form-item>
+      <el-form-item v-if="wechatOpen || dingTalkOpen">
         <table class="el-table" border="0" cellpadding="0" cellspacing="0">
           <colgroup>
             <col name="el-table_1_column_1" width="100">
@@ -39,7 +39,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="el-table__row">
+            <tr v-if="dingTalkOpen" class="el-table__row">
               <td class="el-table_1_column_1 el-table__cell" rowspan="1" colspan="1">
                 <div class="cell">{{ $t('system.dingtalk.name') }}</div>
               </td>
@@ -81,7 +81,7 @@
                 </div>
               </td>
             </tr>
-            <tr class="el-table__row">
+            <tr v-if="wechatOpen" class="el-table__row">
               <td class="el-table_1_column_1 el-table__cell" rowspan="1" colspan="1">
                 <div class="cell">{{ $t('system.wechat.name') }}</div>
               </td>
@@ -171,7 +171,9 @@ export default {
       error: {},
       dingTalk: null,
       wechat: null,
-      visible: false
+      visible: false,
+      dingTalkOpen: false,
+      wechatOpen: false
     }
   },
   watch: {
@@ -187,8 +189,15 @@ export default {
   },
   mounted() {
     this.getUser()
+    this.getSetting()
   },
   methods: {
+    getSetting() {
+      this.$store.dispatch('user/setting').then(res => {
+        this.dingTalkOpen = res.ding_talk_open
+        this.wechatOpen = res.wechat_open
+      })
+    },
     getUser() {
       getInfo().then(response => {
         const { data } = response

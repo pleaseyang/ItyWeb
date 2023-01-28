@@ -52,12 +52,12 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
-      <div class="login-oauth">
+      <div v-if="dingTalkOpen || wechatOpen" class="login-oauth">
         <el-divider content-position="center">{{ $t('login.thirdparty') }}</el-divider>
-        <el-button type="primary" circle @click="dingTalkLogin">
+        <el-button v-if="dingTalkOpen" type="primary" circle @click="dingTalkLogin">
           <svg-icon icon-class="dingtalk" style="font-size: 18px" />
         </el-button>
-        <el-button type="success" circle @click="wechatLogin">
+        <el-button v-if="wechatOpen" type="success" circle @click="wechatLogin">
           <svg-icon icon-class="wechat" style="font-size: 18px" />
         </el-button>
       </div>
@@ -102,7 +102,9 @@ export default {
       error: {},
       title: 'Loading...',
       logo: '',
-      visible: false
+      visible: false,
+      dingTalkOpen: false,
+      wechatOpen: false
     }
   },
   watch: {
@@ -139,6 +141,8 @@ export default {
       this.$store.dispatch('user/setting').then(res => {
         this.title = res.title
         this.logo = res.logo
+        this.dingTalkOpen = res.ding_talk_open
+        this.wechatOpen = res.wechat_open
         document.title = this.title
       }).finally(() => {
         this.loading = false
