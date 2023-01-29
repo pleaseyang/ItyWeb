@@ -4,6 +4,7 @@ export function setting(data) {
   return request({
     url: '/setting',
     method: 'post',
+    checkVersion: false,
     data
   })
 }

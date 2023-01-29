@@ -541,5 +541,14 @@ export default {
       _foreign_show_column: '外键显示字段',
       select: '请选择'
     }
+  },
+  version: {
+    error_handle: '点击升级按钮或使用 CTRL+F5 升级客户端',
+    error: '当前客户端版本不匹配，请升级客户端。',
+    update: '升级'
+  },
+  error: {
+    number: '错误编号',
+    handle: '我们会尽快修复此错误，您也可以复制编号联系 客服/技术 人员'
   }
 }

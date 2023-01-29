@@ -541,5 +541,14 @@ export default {
       _foreign_show_column: 'Foreign Column Show',
       select: 'Please Select'
     }
+  },
+  version: {
+    error_handle: 'Click the Upgrade button or use CTRL+F5 to upgrade the client',
+    error: 'The current client version does not match. Please upgrade the client.',
+    update: 'Update'
+  },
+  error: {
+    number: 'Error number',
+    handle: 'We will fix this error as soon as possible. You can also copy the number to contact customer service/technical personnel'
   }
 }
