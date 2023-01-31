@@ -3,9 +3,10 @@
     <el-form ref="loginForm" :model="loginForm" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">
-          {{ $t('login.title') }}
-        </h3>
+        <div class="logo">
+          <el-avatar :src="logo" size="large" class="logo-image" />
+          <label class="title">{{ title }}</label>
+        </div>
         <lang-select class="set-language" />
       </div>
 
@@ -16,7 +17,7 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          :placeholder="$t('login.username')"
+          :placeholder="$t('login.username') + '/' + $t('admin.email')"
           name="username"
           type="text"
           tabindex="1"
@@ -51,12 +52,37 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
+      <div v-if="dingTalkOpen || wechatOpen" class="login-oauth">
+        <el-divider content-position="center">{{ $t('login.thirdparty') }}</el-divider>
+        <el-button v-if="dingTalkOpen" type="primary" circle @click="dingTalkLogin">
+          <svg-icon icon-class="dingtalk" style="font-size: 18px" />
+        </el-button>
+        <el-button v-if="wechatOpen" type="success" circle @click="wechatLogin">
+          <svg-icon icon-class="wechat" style="font-size: 18px" />
+        </el-button>
+      </div>
     </el-form>
+    <el-dialog
+      :visible.sync="visible"
+    >
+      <div id="login_container" />
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import * as dd from 'dingtalk-jsapi'
 import LangSelect from '@/components/LangSelect'
+import {
+  dingTalk,
+  dingTalkCheckState,
+  dingTalkCorpId,
+  dingTalkDD,
+  dingTalkUrl, wechat, wechatCheckState,
+  wechatUrl,
+  wechatUrlOffiaccount
+} from '@/api/user'
+import { getQueryObject, loadJS } from '@/utils'
 
 export default {
   name: 'Login',
@@ -73,7 +99,12 @@ export default {
       showDialog: false,
       redirect: undefined,
       otherQuery: {},
-      error: {}
+      error: {},
+      title: 'Loading...',
+      logo: '',
+      visible: false,
+      dingTalkOpen: false,
+      wechatOpen: false
     }
   },
   watch: {
@@ -83,13 +114,14 @@ export default {
         if (query) {
           this.redirect = query.redirect
           this.otherQuery = this.getOtherQuery(query)
+          this.wechatLoginCallBack()
         }
       },
       immediate: true
     }
   },
   created() {
-
+    this.dingTalkLoginCallBack()
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -97,11 +129,25 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.getSetting()
   },
   destroyed() {
 
   },
   methods: {
+    getSetting() {
+      this.loading = true
+      document.title = this.title
+      this.$store.dispatch('user/setting').then(res => {
+        this.title = res.title
+        this.logo = res.logo
+        this.dingTalkOpen = res.ding_talk_open
+        this.wechatOpen = res.wechat_open
+        document.title = this.title
+      }).finally(() => {
+        this.loading = false
+      })
+    },
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')
@@ -118,6 +164,7 @@ export default {
     },
     handleLogin() {
       this.loading = true
+      this.error = {}
       this.$store.dispatch('user/login', this.loginForm)
         .then(() => {
           this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
@@ -140,6 +187,148 @@ export default {
         }
         return acc
       }, {})
+    },
+    wechatLogin() {
+      const ua = navigator.userAgent.toLowerCase()
+      const is = /micromessenger/.test(ua)
+      if (!is) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        wechatUrl().then(response => {
+          loadJS('//res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js', 'WxLogin').then(() => {
+            this.visible = true
+            this.$nextTick(() => {
+              const { data } = response
+              // eslint-disable-next-line no-undef
+              new WxLogin({
+                self_redirect: false,
+                id: 'login_container',
+                appid: data.appid,
+                scope: 'snsapi_login',
+                redirect_uri: data.redirect_uri,
+                state: data.state,
+                style: '',
+                href: ''
+              })
+            })
+          })
+        }).finally(() => {
+          loading.close()
+        })
+      } else {
+        wechatUrlOffiaccount().then(response => {
+          const { url } = response.data
+          window.location.href = url
+        })
+      }
+    },
+    wechatLoginCallBack() {
+      const query = getQueryObject(window.location.href)
+      this.visible = false
+      if (Object.prototype.hasOwnProperty.call(query, 'code')) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        wechatCheckState({
+          state: query.state.replace('#/login', '')
+        }).then(response => {
+          const { check } = response.data
+          if (check) {
+            let type = ''
+            const ua = navigator.userAgent.toLowerCase()
+            const is = /micromessenger/.test(ua)
+            if (!is) {
+              type = 'oplatform'
+            } else {
+              type = 'offiaccount'
+            }
+            wechat({
+              state: query.state.replace('#/login', ''),
+              code: query.code,
+              type: type
+            }).then(response => {
+              this.$store.dispatch('user/loginByCode', response)
+                .then(() => {
+                  this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                  this.loading = false
+                })
+            }).finally(() => {
+              loading.close()
+            })
+          } else {
+            loading.close()
+          }
+        })
+      }
+    },
+    dingTalkLogin() {
+      if (dd.env.platform === 'notInDingTalk') {
+        dingTalkUrl().then(response => {
+          const { url } = response.data
+          window.location.href = url
+        })
+      } else {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        dingTalkCorpId().then(response => {
+          const { corpId } = response.data
+          dd.runtime.permission.requestAuthCode({
+            corpId: corpId
+          }).then(res => {
+            dingTalkDD({
+              code: res.code,
+              state: 'state'
+            }).then(response => {
+              this.$store.dispatch('user/loginByCode', response)
+                .then(() => {
+                  this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                  this.loading = false
+                })
+            }).finally(() => {
+              loading.close()
+            })
+          })
+        })
+      }
+    },
+    dingTalkLoginCallBack() {
+      const query = getQueryObject(window.location.href)
+      if (Object.prototype.hasOwnProperty.call(query, 'authCode')) {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        dingTalkCheckState({
+          state: query.state.replace('#/login', '')
+        }).then(response => {
+          const { check } = response.data
+          if (check) {
+            dingTalk({
+              state: query.state.replace('#/login', ''),
+              code: query.authCode
+            }).then(response => {
+              this.$store.dispatch('user/loginByCode', response)
+                .then(() => {
+                  this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+                  this.loading = false
+                })
+            }).finally(() => {
+              loading.close()
+            })
+          } else {
+            loading.close()
+          }
+        })
+      }
     }
   }
 }
@@ -210,6 +399,11 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+
+    .login-oauth {
+      text-align: center;
+      justify-content: space-around;
+    }
   }
 
   .tips {
@@ -235,12 +429,25 @@ $light_gray:#eee;
   .title-container {
     position: relative;
 
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
+    .logo{
+      height: 50px;
+      position: relative;
+      margin-bottom: 25px;
+      .logo-image{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 100%;
+        margin: auto;
+      }
+      .title{
+        line-height: 50px;
+        margin-left: 50px;
+        font-size: 26px;
+        color: $light_gray;
+        font-weight: bold;
+      }
     }
 
     .set-language {
@@ -274,5 +481,17 @@ $light_gray:#eee;
       display: none;
     }
   }
+
+  .el-divider{
+    background-color: $light_gray;
+    .el-divider__text{
+      background-color: $bg;
+      color: $light_gray;
+    }
+  }
+}
+
+#login_container {
+  text-align: center;
 }
 </style>

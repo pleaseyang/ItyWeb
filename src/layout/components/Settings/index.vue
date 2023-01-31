@@ -41,7 +41,7 @@
 
 <script>
 import ThemePicker from '@/components/ThemePicker'
-import Cookies from 'js-cookie'
+import { setting } from '@/api/admin'
 
 export default {
   components: { ThemePicker },
@@ -57,7 +57,10 @@ export default {
         return this.$store.state.settings.fixedHeader
       },
       set(val) {
-        Cookies.set('fixedHeader', val, { expires: 365 })
+        setting({
+          key: 'fixed_header',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'fixedHeader',
           value: val
@@ -69,7 +72,10 @@ export default {
         return this.$store.state.settings.tagsView
       },
       set(val) {
-        Cookies.set('tagsView', val, { expires: 365 })
+        setting({
+          key: 'tags_view',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'tagsView',
           value: val
@@ -81,7 +87,10 @@ export default {
         return this.$store.state.settings.sidebarLogo
       },
       set(val) {
-        Cookies.set('sidebarLogo', val, { expires: 365 })
+        setting({
+          key: 'sidebar_logo',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'sidebarLogo',
           value: val
@@ -93,7 +102,10 @@ export default {
         return this.$store.state.settings.supportPinyinSearch
       },
       set(val) {
-        Cookies.set('supportPinyinSearch', val, { expires: 365 })
+        setting({
+          key: 'support_pinyin_search',
+          value: val === true ? 1 : 0
+        })
         this.$store.dispatch('settings/changeSetting', {
           key: 'supportPinyinSearch',
           value: val
@@ -106,6 +118,10 @@ export default {
   },
   methods: {
     themeChange(val) {
+      setting({
+        key: 'theme',
+        value: val
+      })
       this.$store.dispatch('settings/changeSetting', {
         key: 'theme',
         value: val

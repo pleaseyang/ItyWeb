@@ -2,6 +2,7 @@ import axios from 'axios'
 import { MessageBox, Message, Notification } from 'element-ui'
 import store from '@/store'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import i18n from '../lang'
 
 // create an axios instance
 const service = axios.create({
@@ -13,6 +14,27 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   config => {
+    let checkVersion = true
+    if (Object.prototype.hasOwnProperty.call(config, 'checkVersion')) {
+      checkVersion = config.checkVersion
+    }
+    if (checkVersion) {
+      const localVersion = process.env.VUE_APP_VERSION
+      const version = store.getters.systemSetting.version
+      if (version !== localVersion) {
+        MessageBox.alert(
+          `${localVersion}  =>  ${version} ` +
+          i18n.t('version.error_handle'),
+          i18n.t('version.error'), {
+            type: 'error',
+            closeOnClickModal: false,
+            confirmButtonText: i18n.t('version.update')
+          }).then(() => {
+          window.location.reload(true)
+        })
+        return Promise.reject('version error')
+      }
+    }
     switch (store.getters.language) {
       case 'zh':
         config.headers['Lang'] = 'zh-CN'
@@ -68,8 +90,8 @@ service.interceptors.response.use(
         if (!isRefreshing) {
           isRefreshing = true
           return refreshToken().then(res => {
-            const { access_token } = res
-            setToken(access_token)
+            const { access_token, expires_in } = res
+            setToken(access_token, expires_in)
             config.headers['Authorization'] = 'Bearer ' + access_token
             config.baseURL = ''
             requests.forEach(cb => cb(access_token))
@@ -93,7 +115,7 @@ service.interceptors.response.use(
         Notification.error({
           title: data.message,
           dangerouslyUseHTMLString: true,
-          message: `<p>ErrorNumber:${data.data.errorId}</p> We'll deal with it as soon as possible`,
+          message: `<p>${i18n.t('error.number')}: ${data.data.errorId}</p> ${i18n.t('error.handle')}`,
           duration: 0
         })
       } else {
@@ -105,13 +127,15 @@ service.interceptors.response.use(
       }
       return Promise.reject(error)
     } else {
-      MessageBox.alert(error.message, error.name, {
-        type: 'error',
-        closeOnClickModal: false,
-        closeOnPressEscape: false,
-        closeOnHashChange: false,
-        roundButton: true
-      })
+      if (Object.prototype.hasOwnProperty.call(error, 'message')) {
+        MessageBox.alert(error.message, error.name, {
+          type: 'error',
+          closeOnClickModal: false,
+          closeOnPressEscape: false,
+          closeOnHashChange: false,
+          roundButton: true
+        })
+      }
       return Promise.reject(error)
     }
   }

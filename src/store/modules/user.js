@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, setting } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -9,7 +9,8 @@ const state = {
   introduction: '',
   roles: [],
   accessedRoutes: [],
-  unreadNotificationCount: 0
+  unreadNotificationCount: 0,
+  systemSetting: {}
 }
 
 const mutations = {
@@ -33,10 +34,24 @@ const mutations = {
   },
   SET_UNREADNOTIFICATIONCOUNT: (state, unreadNotificationCount) => {
     state.unreadNotificationCount = unreadNotificationCount
+  },
+  SET_SYSTEM_SETTING: (state, setting) => {
+    state.systemSetting = setting
   }
 }
 
 const actions = {
+  setting({ commit }) {
+    return new Promise((resolve, reject) => {
+      setting().then(response => {
+        commit('SET_SYSTEM_SETTING', response.data)
+        resolve(response.data)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
   // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo
@@ -44,11 +59,20 @@ const actions = {
       login({ name: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.access_token)
-        setToken(data.access_token)
+        setToken(data.access_token, data.expires_in)
         resolve()
       }).catch(error => {
         reject(error)
       })
+    })
+  },
+
+  loginByCode({ commit }, response) {
+    return new Promise((resolve, reject) => {
+      const { data } = response
+      commit('SET_TOKEN', data.access_token)
+      setToken(data.access_token, data.expires_in)
+      resolve()
     })
   },
 

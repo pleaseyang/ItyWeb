@@ -23,7 +23,6 @@ import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 import Theme from '@/components/ThemePicker'
-import Cookies from 'js-cookie'
 
 export default {
   name: 'Layout',
@@ -61,37 +60,30 @@ export default {
   },
   mounted() {
     this.buttonTop = document.body.clientHeight / 2 - 24
-    if (Cookies.get('theme')) {
-      this.$refs.theme.theme = Cookies.get('theme')
-      this.$store.dispatch('settings/changeSetting', {
-        key: 'theme',
-        value: Cookies.get('theme')
-      })
-    }
-    if (Cookies.get('tagsView')) {
+    // 获取当前登录的配置信息
+    this.$store.dispatch('user/getInfo').then(response => {
+      const { config } = response
       this.$store.dispatch('settings/changeSetting', {
         key: 'tagsView',
-        value: Cookies.get('tagsView') === 'true'
+        value: config.tagsView
       })
-    }
-    if (Cookies.get('sidebarLogo')) {
+      this.$store.dispatch('settings/changeSetting', {
+        key: 'theme',
+        value: config.theme
+      })
       this.$store.dispatch('settings/changeSetting', {
         key: 'sidebarLogo',
-        value: Cookies.get('sidebarLogo') === 'true'
+        value: config.sidebarLogo
       })
-    }
-    if (Cookies.get('supportPinyinSearch')) {
       this.$store.dispatch('settings/changeSetting', {
         key: 'supportPinyinSearch',
-        value: Cookies.get('supportPinyinSearch') === 'true'
+        value: config.supportPinyinSearch
       })
-    }
-    if (Cookies.get('fixedHeader')) {
       this.$store.dispatch('settings/changeSetting', {
         key: 'fixedHeader',
-        value: Cookies.get('fixedHeader') === 'true'
+        value: config.fixedHeader
       })
-    }
+    })
   },
   methods: {
     handleClickOutside() {

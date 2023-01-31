@@ -78,3 +78,11 @@ export function navSetAffix(data) {
     data
   })
 }
+
+export function setting(data) {
+  return request({
+    url: '/admin/setting',
+    method: 'post',
+    data
+  })
+}
