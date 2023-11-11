@@ -48,7 +48,7 @@ export default {
         id: id
       }).then(response => {
         this.dialogVisible = true
-        const form = response.data
+        const form = response.data.item
         form.status = form.status === 1
         this.form = form
       }).finally(_ => {

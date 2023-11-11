@@ -84,7 +84,7 @@ const actions = {
         if (!data) {
           reject('Verification failed, please Login again.')
         }
-        const { roles, name, avatar, email, accessedRoutes, permissions, unreadNotificationCount } = data
+        const { roles, name, avatar, email, accessedRoutes, permissions, unreadNotificationCount } = data.item
         // roles must be a non-empty array
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
@@ -98,14 +98,13 @@ const actions = {
             children: permissions
           })
         }
-
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', email)
         commit('SET_ACCESSEDROUTES', accessedRoutes)
         commit('SET_UNREADNOTIFICATIONCOUNT', unreadNotificationCount)
-        resolve(data)
+        resolve(data.item)
       }).catch(error => {
         reject(error)
       })

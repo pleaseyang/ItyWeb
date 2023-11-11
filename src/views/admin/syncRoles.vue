@@ -64,7 +64,7 @@ export default {
           id: this.id
         }).then(response => {
           const { data } = response
-          this.roleIds = data.roleIds
+          this.roleIds = data.item.roleIds
           all({
             'guard_name': 'admin'
           }).then(response2 => {

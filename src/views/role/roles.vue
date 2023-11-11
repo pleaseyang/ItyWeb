@@ -323,7 +323,7 @@ export default {
         this.updateError = {}
         const { data } = response
         this.updateVisible = true
-        this.updateForm = data
+        this.updateForm = data.item
       })
     },
     syncPermissions(row) {

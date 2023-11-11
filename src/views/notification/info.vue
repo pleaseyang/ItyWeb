@@ -50,7 +50,7 @@ export default {
         id: id
       }).then(response => {
         this.notificationInfoShow = true
-        this.notificationInfoData = response.data
+        this.notificationInfoData = response.data.item
         unReadCount().then(response2 => {
           const { count } = response2.data
           this.$emit('notificationCount', count)

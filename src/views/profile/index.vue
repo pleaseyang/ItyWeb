@@ -201,8 +201,8 @@ export default {
     getUser() {
       getInfo().then(response => {
         const { data } = response
-        this.updateForm.name = data.name
-        this.updateForm.email = data.email
+        this.updateForm.name = data.item.name
+        this.updateForm.email = data.item.email
         this.getDingTalkInfo()
         this.getWechatInfo()
       })
