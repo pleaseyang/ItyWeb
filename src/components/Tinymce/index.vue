@@ -19,7 +19,7 @@ import load from './dynamicLoadScript'
 import { fileUploadUnPermission } from '@/api/file'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce@5.6.1/tinymce.min.js'
+const tinymceCDN = 'https://jkds.oss-ap-northeast-1.aliyuncs.com/tinymce/tinymce.min.js'
 
 export default {
   name: 'Tinymce',
@@ -142,7 +142,7 @@ export default {
       window.tinymce.init({
         skin: 'oxide',
         language: this.language,
-        language_url: `https://cdn.jsdelivr.net/npm/tinymce-lang/langs/${this.language}.js`,
+        language_url: `https://jkds.oss-ap-northeast-1.aliyuncs.com/tinymce/langs/${this.language}.js`,
         selector: `#${this.tinymceId}`,
         height: this.height,
         body_class: 'panel-body ',
