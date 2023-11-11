@@ -180,7 +180,7 @@ export default {
       genTableInfo({
         id: id
       }).then(response => {
-        this.form = response.data
+        this.form = response.data.item
         columnConfig().then(response2 => {
           const { dict = [], dictData = [], permission = [], select = [], type = [], tables = [] } = response2.data
           this.dict = dict
