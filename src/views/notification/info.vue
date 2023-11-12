@@ -9,16 +9,7 @@
         {{ notificationInfoData.data ? notificationInfoData.data.form : '' }}
       </el-form-item>
       <el-form-item :label="$t('notification.message')">
-        <Tinymce
-          :id="notificationInfoData ? notificationInfoData.id : ''"
-          :value="notificationInfoData.data ? notificationInfoData.data.message : ''"
-          :statusbar="false"
-          :height="400"
-          :toolbar="['']"
-          :menubar="''"
-          :readonly="true"
-          :editor-image="false"
-        />
+        <WangEditor ref="contentEditor" v-model="content" read-only />
       </el-form-item>
       <el-form-item :label="$t('common.createdAt')">
         {{ rTime(notificationInfoData.created_at) }}
@@ -28,17 +19,19 @@
 </template>
 
 <script>
-import Tinymce from '@/components/Tinymce'
 import { notification, unReadCount } from '@/api/notification'
 import { rTime } from '@/utils'
 
 export default {
   name: 'Info',
-  components: { Tinymce },
+  components: {
+    WangEditor: () => import('@/components/WangEditor')
+  },
   data() {
     return {
       notificationInfoShow: false,
-      notificationInfoData: {}
+      notificationInfoData: {},
+      content: ''
     }
   },
   methods: {
@@ -51,6 +44,7 @@ export default {
       }).then(response => {
         this.notificationInfoShow = true
         this.notificationInfoData = response.data.item
+        this.content = this.notificationInfoData.data ? this.notificationInfoData.data.message : ''
         unReadCount().then(response2 => {
           const { count } = response2.data
           this.$emit('notificationCount', count)
