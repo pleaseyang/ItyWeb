@@ -80,7 +80,7 @@ export default {
           id: this.id
         }).then(response => {
           this.error = {}
-          this.form = response.data
+          this.form = response.data.item
         }).finally(_ => {
           this.loading = false
         })

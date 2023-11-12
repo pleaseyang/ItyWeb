@@ -334,7 +334,7 @@ export default {
       }).then(response => {
         const { data } = response
         this.updateVisible = true
-        this.updateForm = data
+        this.updateForm = data.item
       }).finally(() => {
         loading.close()
       })

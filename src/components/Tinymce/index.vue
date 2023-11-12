@@ -19,7 +19,7 @@ import load from './dynamicLoadScript'
 import { fileUploadUnPermission } from '@/api/file'
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = 'https://jkds.oss-ap-northeast-1.aliyuncs.com/tinymce/tinymce.min.js'
+const tinymceCDN = 'tinymce cdn'
 
 export default {
   name: 'Tinymce',

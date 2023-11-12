@@ -64,7 +64,7 @@ export default {
           id: this.id
         }).then(response => {
           const { data } = response
-          this.permissionIds = data.permissionIds
+          this.permissionIds = data.item.permissionIds
           this.getTree()
         }).catch(reason => {
           this.loading = false

@@ -64,7 +64,7 @@ export default {
           const { list = [] } = response2.data
           this.listClass = list
           this.dialogVisible = true
-          const form = response.data
+          const form = response.data.item
           form.status = form.status === 1
           form.default = form.default === 1
           this.form = form

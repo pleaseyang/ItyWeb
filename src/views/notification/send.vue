@@ -21,7 +21,7 @@
             </el-select>
           </el-form-item>
           <el-form-item :label="$t('notification.message')" :error="error.message ? error.message[0] : ''">
-            <Tinymce ref="editor" v-model="form.message" :height="400" :editor-image="false" />
+            <WangEditor ref="contentEditor" v-model="form.message" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="send">{{ $t('notification.send') }}</el-button>
@@ -33,11 +33,12 @@
 </template>
 
 <script>
-import Tinymce from '@/components/Tinymce'
 import { admins, send } from '@/api/notification'
 export default {
   name: 'NotificationSend',
-  components: { Tinymce },
+  components: {
+    WangEditor: () => import('@/components/WangEditor')
+  },
   data() {
     return {
       form: {
@@ -92,7 +93,7 @@ export default {
           admins: ['all']
         }
         // 只有这样才能清空
-        this.$refs.editor.setContent('')
+        this.$refs.contentEditor.clear()
         this.loading = false
       }).catch(reason => {
         if (reason.response.status === 422) {

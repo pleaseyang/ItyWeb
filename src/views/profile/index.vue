@@ -5,10 +5,10 @@
         <el-input v-model="updateForm.name" />
       </el-form-item>
       <el-form-item :label="$t('admin.email')" prop="email" :error="error.email ? error.email[0] : ''">
-        <el-input v-model="updateForm.email" />
+        <el-input v-model="updateForm.email" autocomplete="new-email" />
       </el-form-item>
       <el-form-item :label="$t('admin.password')" prop="password" :error="error.password ? error.password[0] : ''">
-        <el-input v-model="updateForm.password" show-password :placeholder="$t('admin.emptyPasswordText')" />
+        <el-input v-model="updateForm.password" show-password :placeholder="$t('admin.emptyPasswordText')" autocomplete="new-password" />
       </el-form-item>
       <el-form-item v-if="wechatOpen || dingTalkOpen">
         <table class="el-table" border="0" cellpadding="0" cellspacing="0">
@@ -201,8 +201,8 @@ export default {
     getUser() {
       getInfo().then(response => {
         const { data } = response
-        this.updateForm.name = data.name
-        this.updateForm.email = data.email
+        this.updateForm.name = data.item.name
+        this.updateForm.email = data.item.email
         this.getDingTalkInfo()
         this.getWechatInfo()
       })
